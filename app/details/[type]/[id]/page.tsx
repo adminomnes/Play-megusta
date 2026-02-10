@@ -14,16 +14,6 @@ interface Props {
     }>;
 }
 
-// Required for static export with dynamic routes
-export async function generateStaticParams(): Promise<{ type: string; id: string }[]> {
-    // Return empty array - pages will be generated on-demand
-    // This is required for Next.js static export with dynamic routes
-    return [];
-}
-
-// Allow dynamic params at runtime
-export const dynamicParams = true;
-
 
 export default async function DetailsPage({ params }: Props) {
     const { type, id } = await params;

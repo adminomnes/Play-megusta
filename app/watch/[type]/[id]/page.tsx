@@ -11,14 +11,6 @@ interface Props {
     }>;
 }
 
-// Required for static export with dynamic routes
-export async function generateStaticParams(): Promise<{ type: string; id: string }[]> {
-    return [];
-}
-
-// Allow dynamic params at runtime
-export const dynamicParams = true;
-
 
 export default async function WatchPage({ params }: Props) {
     const { type, id } = await params;
