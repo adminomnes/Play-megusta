@@ -14,6 +14,16 @@ interface Props {
     }>;
 }
 
+// Generate static params for popular content
+export async function generateStaticParams() {
+    // Return empty array to make all pages dynamic (client-side rendered)
+    // This allows the build to complete without pre-generating all possible pages
+    return [];
+}
+
+export const dynamicParams = true; // Allow dynamic params at runtime
+
+
 export default async function DetailsPage({ params }: Props) {
     const { type, id } = await params;
 

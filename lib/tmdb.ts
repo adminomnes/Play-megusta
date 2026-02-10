@@ -1,31 +1,23 @@
-const API_BASE = '/api/tmdb';
 const TMDB_INTERNAL_BASE = 'https://api.themoviedb.org/3';
 
 export async function fetchTMDB(path: string, params: Record<string, string | number> = {}) {
-    const isServer = typeof window === 'undefined';
     const queryParams = new URLSearchParams({
         language: 'es-CL',
         ...params,
     } as any);
 
-    if (isServer) {
-        // Direct call to TMDB from server using secret token
-        const url = `${TMDB_INTERNAL_BASE}/${path}?${queryParams.toString()}`;
-        const res = await fetch(url, {
-            headers: {
-                Authorization: `Bearer ${process.env.TMDB_BEARER_TOKEN}`,
-            },
-            next: { revalidate: 3600 }
-        });
-        if (!res.ok) throw new Error(`TMDB Server Fetch Error: ${res.status}`);
-        return res.json();
-    } else {
-        // Call through our API proxy from client
-        const url = `${API_BASE}/${path}?${queryParams.toString()}`;
-        const res = await fetch(url);
-        if (!res.ok) throw new Error(`TMDB Client Fetch Error: ${res.status}`);
-        return res.json();
-    }
+    // Direct call to TMDB for Static Export (Client-side token)
+    // NOTE: This exposes the token, but is required for "Drag & Drop" deployment simplicity.
+    const url = `${TMDB_INTERNAL_BASE}/${path}?${queryParams.toString()}`;
+    const res = await fetch(url, {
+        headers: {
+            Authorization: `Bearer ${process.env.NEXT_PUBLIC_TMDB_TOKEN || process.env.TMDB_BEARER_TOKEN}`,
+        },
+        next: { revalidate: 3600 }
+    });
+
+    if (!res.ok) throw new Error(`TMDB Fetch Error: ${res.status}`);
+    return res.json();
 }
 
 export const TMDB_IMAGE_BASE = 'https://image.tmdb.org/t/p/';
