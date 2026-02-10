@@ -21,8 +21,6 @@ export async function generateStaticParams() {
     return [];
 }
 
-export const dynamicParams = true; // Allow dynamic params at runtime
-
 
 export default async function DetailsPage({ params }: Props) {
     const { type, id } = await params;
