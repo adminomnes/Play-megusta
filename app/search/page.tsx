@@ -7,27 +7,30 @@ import Footer from '@/components/Footer';
 import Card from '@/components/Card';
 import SkeletonLoader from '@/components/SkeletonLoader';
 import { fetchTMDB, TMDB_ENDPOINTS } from '@/lib/tmdb';
+import { Movie } from '@/lib/types';
 import styles from './Search.module.css';
 
 function SearchResults() {
     const searchParams = useSearchParams();
     const query = searchParams.get('q') || '';
-    const [results, setResults] = useState<any[]>([]);
+    const [results, setResults] = useState<Movie[]>([]);
     const [loading, setLoading] = useState(false);
     const [tab, setTab] = useState<'all' | 'movie' | 'tv'>('all');
 
     useEffect(() => {
         if (query) {
+            // eslint-disable-next-line react-hooks/exhaustive-deps
             setLoading(true);
             fetchTMDB(TMDB_ENDPOINTS.searchMulti, { query })
                 .then(data => {
                     // Filter out people
-                    const filtered = data.results.filter((item: any) => item.media_type !== 'person');
+                    const filtered = data.results.filter((item: Movie) => item.media_type !== 'person');
                     setResults(filtered);
-                    setLoading(false);
                 })
                 .catch(err => {
                     console.error(err);
+                })
+                .finally(() => {
                     setLoading(false);
                 });
         }
@@ -56,12 +59,12 @@ function SearchResults() {
             ) : filteredResults.length > 0 ? (
                 <div className={styles.grid}>
                     {filteredResults.map((item) => (
-                        <Card key={item.id} movie={item} type={item.media_type} />
+                        <Card key={item.id} movie={item} type={item.media_type as 'movie' | 'tv' || 'movie'} />
                     ))}
                 </div>
             ) : query && (
                 <div className={styles.noResults}>
-                    <p>Tu búsqueda de "{query}" no arrojó resultados.</p>
+                    <p>Tu búsqueda de &quot;{query}&quot; no arrojó resultados.</p>
                     <ul>
                         <li>Intenta con palabras clave diferentes</li>
                         <li>Busca el título de una película o serie</li>

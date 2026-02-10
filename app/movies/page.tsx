@@ -1,3 +1,4 @@
+import { Movie } from '@/lib/types';
 import { fetchTMDB, TMDB_ENDPOINTS } from '@/lib/tmdb';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -41,7 +42,7 @@ export default async function MoviesPage({ searchParams }: { searchParams: Promi
 
             <div className={styles.container}>
                 <div className={styles.grid}>
-                    {data.results.map((item: any) => (
+                    {data.results.map((item: Movie) => (
                         <Card key={item.id} movie={item} type="movie" />
                     ))}
                 </div>

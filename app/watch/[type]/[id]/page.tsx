@@ -1,4 +1,5 @@
 import { fetchTMDB } from '@/lib/tmdb';
+import { Movie, Video } from '@/lib/types';
 import Navbar from '@/components/Navbar';
 import Link from 'next/link';
 import { ChevronLeft } from 'lucide-react';
@@ -24,9 +25,9 @@ export default async function WatchPage({ params }: Props) {
     // if (details.video_url) return <RealPlayer url={details.video_url} />
 
     const trailer = videos.results?.find(
-        (v: any) => v.type === 'Trailer' && v.site === 'YouTube'
+        (v: Video) => v.type === 'Trailer' && v.site === 'YouTube'
     ) || videos.results?.find(
-        (v: any) => v.site === 'YouTube'
+        (v: Video) => v.site === 'YouTube'
     );
 
     return (

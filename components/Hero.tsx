@@ -31,7 +31,7 @@ const Hero: React.FC<HeroProps> = ({ movie }) => {
                 <div className={styles.meta}>
                     <span className={styles.rating}>
                         <Star size={16} fill="var(--neon-cyan)" stroke="var(--neon-cyan)" />
-                        {movie.vote_average.toFixed(1)}
+                        {(movie.vote_average || 0).toFixed(1)}
                     </span>
                     <span className={styles.year}>
                         {(movie.release_date || movie.first_air_date || '').split('-')[0]}

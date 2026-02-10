@@ -1,10 +1,12 @@
+import { Movie } from './types';
+
 const TMDB_INTERNAL_BASE = 'https://api.themoviedb.org/3';
 
 export async function fetchTMDB(path: string, params: Record<string, string | number> = {}) {
     const queryParams = new URLSearchParams({
         language: 'es-CL',
         ...params,
-    } as any);
+    } as unknown as Record<string, string>);
 
     // Direct call to TMDB for Static Export (Client-side token)
     // NOTE: This exposes the token, but is required for "Drag & Drop" deployment simplicity.
@@ -64,11 +66,11 @@ export const WEIGHTS = {
     DETAIL: 1
 };
 
-export function trackInteraction(movie: any, weight: number) {
+export function trackInteraction(movie: Movie, weight: number) {
     if (typeof window === 'undefined' || !movie) return;
 
     const interactions = JSON.parse(localStorage.getItem('userInteractions') || '{}');
-    const genreIds = movie.genre_ids || movie.genres?.map((g: any) => g.id) || [];
+    const genreIds = movie.genre_ids || movie.genres?.map((g) => g.id) || [];
 
     genreIds.forEach((gid: number) => {
         interactions[gid] = (interactions[gid] || 0) + weight;
@@ -78,7 +80,7 @@ export function trackInteraction(movie: any, weight: number) {
     // Update Continue Watching
     if (weight === WEIGHTS.WATCH) {
         const continueWatching = JSON.parse(localStorage.getItem('continueWatching') || '[]');
-        const filtered = continueWatching.filter((m: any) => m.id !== movie.id);
+        const filtered = continueWatching.filter((m: Movie) => m.id !== movie.id);
         const newItem = {
             id: movie.id,
             title: movie.title || movie.name,

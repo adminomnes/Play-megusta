@@ -1,4 +1,5 @@
 import { fetchTMDB, getImageUrl } from '@/lib/tmdb';
+import { Movie, Genre } from '@/lib/types';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import Row from '@/components/Row';
@@ -54,7 +55,7 @@ export default async function DetailsPage({ params }: Props) {
                             <div className={styles.metadata}>
                                 <span className={styles.rating}>
                                     <Star size={18} fill="var(--neon-cyan)" stroke="var(--neon-cyan)" />
-                                    {details.vote_average.toFixed(1)}
+                                    {(details.vote_average || 0).toFixed(1)}
                                 </span>
                                 <span className={styles.year}>
                                     {new Date(details.release_date || details.first_air_date).getFullYear()}
@@ -70,7 +71,7 @@ export default async function DetailsPage({ params }: Props) {
                             </div>
 
                             <div className={styles.genres}>
-                                {details.genres?.map((g: any) => (
+                                {details.genres?.map((g: Genre) => (
                                     <span key={g.id} className={styles.genreTag}>{g.name}</span>
                                 ))}
                             </div>
@@ -113,7 +114,7 @@ export default async function DetailsPage({ params }: Props) {
             </section>
 
             {recommendations.results?.length > 0 && (
-                <Row title="Títulos similares" movies={recommendations.results} type={type as any} />
+                <Row title="Títulos similares" movies={recommendations.results} type={type as 'movie' | 'tv'} />
             )}
 
             <Footer />

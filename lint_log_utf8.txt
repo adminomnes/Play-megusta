@@ -1,0 +1,183 @@
+﻿
+> app-core@0.1.0 lint
+> eslint
+
+
+C:\Users\johnl\play peliculas\app\continue\page.tsx
+  10:38  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          @typescript-eslint/no-explicit-any
+  14:9   error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\johnl\play peliculas\app\continue\page.tsx:14:9
+  12 |     useEffect(() => {
+  13 |         const continueWatching = JSON.parse(localStorage.getItem('continueWatching') || '[]');
+> 14 |         setList(continueWatching);
+     |         ^^^^^^^ Avoid calling setState() directly within an effect
+  15 |     }, []);
+  16 |
+  17 |     return (  react-hooks/set-state-in-effect
+  31:42  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          @typescript-eslint/no-explicit-any
+  39:25  error  Do not use an `<a>` element to navigate to `/`. Use `<Link />` from `next/link` instead. See: https://nextjs.org/docs/messages/no-html-link-for-pages                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             @next/next/no-html-link-for-pages
+
+C:\Users\johnl\play peliculas\app\details\[type]\[id]\page.tsx
+    5:28  warning  'Calendar' is defined but never used                                                                                                                                                                                                                                                     @typescript-eslint/no-unused-vars
+   28:11  warning  'trailer' is assigned a value but never used                                                                                                                                                                                                                                             @typescript-eslint/no-unused-vars
+   28:46  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+   38:21  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+   48:29  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+   73:58  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+   98:45  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  102:41  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  116:95  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+
+C:\Users\johnl\play peliculas\app\movies\page.tsx
+  29:61  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  44:46  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\johnl\play peliculas\app\my-list\page.tsx
+  10:38  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           @typescript-eslint/no-explicit-any
+  14:9   error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\johnl\play peliculas\app\my-list\page.tsx:14:9
+  12 |     useEffect(() => {
+  13 |         const myList = JSON.parse(localStorage.getItem('myList') || '[]');
+> 14 |         setList(myList);
+     |         ^^^^^^^ Avoid calling setState() directly within an effect
+  15 |     }, []);
+  16 |
+  17 |     return (  react-hooks/set-state-in-effect
+  31:42  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           @typescript-eslint/no-explicit-any
+  39:25  error  Do not use an `<a>` element to navigate to `/`. Use `<Link />` from `next/link` instead. See: https://nextjs.org/docs/messages/no-html-link-for-pages                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              @next/next/no-html-link-for-pages
+
+C:\Users\johnl\play peliculas\app\page.tsx
+  86:84  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\johnl\play peliculas\app\radio\page.tsx
+   11:7   warning  'VIDEO_ID' is assigned a value but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              @typescript-eslint/no-unused-vars
+   20:9   error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\johnl\play peliculas\app\radio\page.tsx:20:9
+  18 |         // Load initial state
+  19 |         const isSubscribed = localStorage.getItem('radio_subscribed') === 'true';
+> 20 |         setSubscribed(isSubscribed);
+     |         ^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  21 |
+  22 |         const notifStatus = localStorage.getItem('radio_notifications') === 'true';
+  23 |         setNotificationsEnabled(notifStatus);  react-hooks/set-state-in-effect
+   57:21  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    @next/next/no-img-element
+  174:48  error    Error: Cannot call impure function during render
+
+`Math.random` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+C:\Users\johnl\play peliculas\app\radio\page.tsx:174:48
+  172 |                         className={styles.bar}
+  173 |                         style={{
+> 174 |                             animationDelay: `${Math.random() * 0.5}s`,
+      |                                                ^^^^^^^^^^^^^ Cannot call impure function
+  175 |                             height: playing ? `${Math.random() * 50 + 20}%` : '10%'
+  176 |                         }}
+  177 |                     />                                                                                                                                                                                                                                                                                                                                                    react-hooks/purity
+  175:50  error    Error: Cannot call impure function during render
+
+`Math.random` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+C:\Users\johnl\play peliculas\app\radio\page.tsx:175:50
+  173 |                         style={{
+  174 |                             animationDelay: `${Math.random() * 0.5}s`,
+> 175 |                             height: playing ? `${Math.random() * 50 + 20}%` : '10%'
+      |                                                  ^^^^^^^^^^^^^ Cannot call impure function
+  176 |                         }}
+  177 |                     />
+  178 |                 ))}                                                                                                                                                                                                                                                                                                                                                                             react-hooks/purity
+
+C:\Users\johnl\play peliculas\app\search\page.tsx
+   8:8   warning  'SkeletonLoader' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            @typescript-eslint/no-unused-vars
+  15:44  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              @typescript-eslint/no-explicit-any
+  21:13  error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\johnl\play peliculas\app\search\page.tsx:21:13
+  19 |     useEffect(() => {
+  20 |         if (query) {
+> 21 |             setLoading(true);
+     |             ^^^^^^^^^^ Avoid calling setState() directly within an effect
+  22 |             fetchTMDB(TMDB_ENDPOINTS.searchMulti, { query })
+  23 |                 .then(data => {
+  24 |                     // Filter out people  react-hooks/set-state-in-effect
+  25:65  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              @typescript-eslint/no-explicit-any
+  64:39  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       react/no-unescaped-entities
+  64:47  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       react/no-unescaped-entities
+
+C:\Users\johnl\play peliculas\app\tv\page.tsx
+  29:61  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  44:46  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\johnl\play peliculas\app\watch\[type]\[id]\page.tsx
+  27:13  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  29:13  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\johnl\play peliculas\components\Card.tsx
+  28:77  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  40:21  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  51:29  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+C:\Users\johnl\play peliculas\components\Hero.tsx
+  20:17  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+C:\Users\johnl\play peliculas\components\Navbar.tsx
+   6:27  warning  'User' is defined but never used                                                                                                                                                                                                                                                         @typescript-eslint/no-unused-vars
+  48:25  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+C:\Users\johnl\play peliculas\components\PersonalizedRows.tsx
+   8:62  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             @typescript-eslint/no-explicit-any
+   9:52  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             @typescript-eslint/no-explicit-any
+  14:9   error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\johnl\play peliculas\components\PersonalizedRows.tsx:14:9
+  12 |         // Load Continue Watching
+  13 |         const cw = JSON.parse(localStorage.getItem('continueWatching') || '[]');
+> 14 |         setContinueWatching(cw);
+     |         ^^^^^^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  15 |
+  16 |         // Load Recommended based on top genres
+  17 |         const topGenres = getTopGenres();  react-hooks/set-state-in-effect
+
+C:\Users\johnl\play peliculas\components\TrackView.tsx
+  6:55  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\johnl\play peliculas\lib\tmdb.ts
+   7:10  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  67:41  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  71:63  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  81:54  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+Ô£û 49 problems (36 errors, 13 warnings)
+

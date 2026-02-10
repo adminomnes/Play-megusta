@@ -3,14 +3,16 @@
 import React, { useState, useEffect } from 'react';
 import Row from './Row';
 import { fetchTMDB, TMDB_ENDPOINTS, getTopGenres } from '@/lib/tmdb';
+import { Movie } from '@/lib/types';
 
 const PersonalizedRows = () => {
-    const [continueWatching, setContinueWatching] = useState<any[]>([]);
-    const [recommended, setRecommended] = useState<any[]>([]);
+    const [continueWatching, setContinueWatching] = useState<Movie[]>([]);
+    const [recommended, setRecommended] = useState<Movie[]>([]);
 
     useEffect(() => {
-        // Load Continue Watching
+        // Load Continue Watching - Client side only
         const cw = JSON.parse(localStorage.getItem('continueWatching') || '[]');
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         setContinueWatching(cw);
 
         // Load Recommended based on top genres

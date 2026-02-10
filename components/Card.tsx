@@ -86,7 +86,7 @@ const Card: React.FC<CardProps> = ({ movie, type = 'movie' }) => {
 
                             <h4 className={styles.title}>{movie.title || movie.name}</h4>
                             <div className={styles.meta}>
-                                <span className={styles.rating}>{movie.vote_average.toFixed(1)} Match</span>
+                                <span className={styles.rating}>{(movie.vote_average || 0).toFixed(1)} Match</span>
                                 <span className={styles.year}>{(movie.release_date || movie.first_air_date || '').split('-')[0]}</span>
                             </div>
                         </div>

@@ -83,7 +83,7 @@ export default async function Home() {
       <div style={{ marginTop: '-150px', position: 'relative', zIndex: 20 }}>
         <PersonalizedRows />
         {data.rows.map((row, index) => (
-          <Row key={index} title={row.title} movies={row.movies} type={row.type as any} />
+          <Row key={index} title={row.title} movies={row.movies} type={row.type as 'movie' | 'tv'} />
         ))}
       </div>
 

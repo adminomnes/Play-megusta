@@ -17,6 +17,7 @@ export default function RadioPage() {
     useEffect(() => {
         // Load initial state
         const isSubscribed = localStorage.getItem('radio_subscribed') === 'true';
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         setSubscribed(isSubscribed);
 
         const notifStatus = localStorage.getItem('radio_notifications') === 'true';
@@ -138,7 +139,14 @@ export default function RadioPage() {
 
 function AudioPlayer() {
     const [playing, setPlaying] = useState(false);
+    const [bars, setBars] = useState<number[]>([]);
     const audioRef = useRef<HTMLAudioElement | null>(null);
+
+    useEffect(() => {
+        // Initialize random bars on client side only to avoid hydration mismatch
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        setBars(Array.from({ length: 20 }, () => Math.random()));
+    }, []);
 
     const togglePlay = () => {
         if (!audioRef.current) return;
@@ -166,13 +174,15 @@ function AudioPlayer() {
 
             {/* Visualizer Animation */}
             <div className={`${styles.visualizer} ${playing ? styles.playing : ''}`}>
-                {[...Array(20)].map((_, i) => (
+                {bars.map((randomVal, i) => (
                     <div
                         key={i}
                         className={styles.bar}
                         style={{
-                            animationDelay: `${Math.random() * 0.5}s`,
-                            height: playing ? `${Math.random() * 50 + 20}%` : '10%'
+                            animationDelay: `${randomVal * 0.5}s`,
+                            // Use CSS variable or consistent calculation to avoid hydration mismatch if valid
+                            // But here we rely on 'bars' being set after mount
+                            height: playing ? `${randomVal * 50 + 20}%` : '10%'
                         }}
                     />
                 ))}

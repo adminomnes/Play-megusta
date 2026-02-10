@@ -1,5 +1,8 @@
-name = "play-megusta"
+name = "play-megusta1"
 compatibility_date = "2024-01-01"
 
 [build]
 command = "npm run build"
+
+[site]
+bucket = ".vercel/output/static"
