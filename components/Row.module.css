@@ -1,0 +1,80 @@
+.row {
+    margin: 2rem 0;
+    padding: 0 4%;
+    position: relative;
+}
+
+.rowTitle {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 0.8rem;
+    color: #e5e5e5;
+    transition: color 0.3s;
+}
+
+.rowTitle:hover {
+    color: var(--neon-cyan);
+}
+
+.rowContainer {
+    position: relative;
+}
+
+.sliderArrow {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 50px;
+    background: rgba(0, 0, 0, 0.5);
+    border: none;
+    color: #fff;
+    z-index: 40;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s, background 0.3s;
+    cursor: pointer;
+}
+
+.row:hover .sliderArrow {
+    opacity: 1;
+}
+
+.sliderArrow:hover {
+    background: rgba(0, 0, 0, 0.8);
+    color: var(--neon-cyan);
+}
+
+.left {
+    left: -4%;
+}
+
+.right {
+    right: -4%;
+}
+
+.slider {
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: scroll;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    /* Firefox */
+}
+
+.slider::-webkit-scrollbar {
+    display: none;
+    /* Chrome, Safari, etc */
+}
+
+@media (max-width: 600px) {
+    .row {
+        padding: 0 1rem;
+    }
+
+    .left,
+    .right {
+        display: none;
+    }
+}

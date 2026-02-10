@@ -1,0 +1,230 @@
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--navbar-height);
+    display: flex;
+    align-items: center;
+    z-index: 1000;
+    transition: var(--transition-smooth);
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8) 0%, transparent 100%);
+}
+
+.scrolled {
+    background: rgba(10, 10, 10, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+}
+
+.container {
+    max-width: 1400px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 4%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.left {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.right {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-weight: 800;
+    font-size: 1.5rem;
+    cursor: pointer;
+    margin-right: 20px;
+}
+
+.logoImage {
+    height: 60px;
+    /* Increased size for better visibility */
+    width: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 0 5px rgba(0, 255, 255, 0.4));
+    /* Added glow to match theme */
+}
+
+/* Old text styles kept just in case but image overrides */
+/*
+.logo {
+    font-size: 1.5rem;
+    font-weight: 900;
+    letter-spacing: -1px;
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+*/
+
+.play {
+    color: #fff;
+}
+
+.megusta {
+    background: var(--grad-premium);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 5px rgba(255, 0, 255, 0.4));
+}
+
+.navLinks {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+}
+
+.navLinks a {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    transition: var(--transition-smooth);
+}
+
+.navLinks a:hover,
+.navLinks a.active {
+    color: #fff;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.iconBtn {
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition-smooth);
+}
+
+.iconBtn:hover {
+    transform: scale(1.1);
+    color: var(--neon-cyan);
+}
+
+.listenBtn {
+    background: var(--neon-cyan);
+    color: #000;
+    font-weight: bold;
+    padding: 8px 16px;
+    border-radius: 4px;
+    margin-right: 15px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.4);
+}
+
+.listenBtn:hover {
+    background: #fff;
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.8);
+    transform: scale(1.05);
+}
+
+.searchBox {
+    display: flex;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid transparent;
+    padding: 5px;
+    border-radius: 4px;
+    transition: var(--transition-smooth);
+}
+
+.searchBox.open {
+    background: rgba(0, 0, 0, 0.6);
+    border-color: var(--neon-cyan);
+    box-shadow: var(--shadow-neon-cyan);
+}
+
+.searchBox input {
+    background: none;
+    border: none;
+    outline: none;
+    color: #fff;
+    width: 0;
+    transition: var(--transition-smooth);
+    padding: 0;
+}
+
+.searchBox.open input {
+    width: 200px;
+    padding: 0 10px;
+}
+
+.mobileOnly {
+    display: none;
+}
+
+@media (max-width: 900px) {
+    .navLinks {
+        display: none;
+    }
+
+    .mobileOnly {
+        display: flex;
+    }
+}
+
+.mobileMenu {
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 10, 10, 0.98);
+    z-index: 2000;
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    transform: translateX(100%);
+    transition: transform 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+.menuOpen {
+    transform: translateX(0);
+}
+
+.closeBtn {
+    align-self: flex-end;
+    color: #fff;
+    margin-bottom: 2rem;
+}
+
+.mobileLogo {
+    font-size: 2rem;
+    font-weight: 900;
+    margin-bottom: 3rem;
+    text-align: center;
+    background: var(--grad-premium);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.mobileLinks {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    align-items: center;
+}
+
+.mobileLinks a {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+.mobileLinks a.active {
+    color: #fff;
+    text-shadow: 0 0 15px rgba(255, 0, 255, 0.8);
+}

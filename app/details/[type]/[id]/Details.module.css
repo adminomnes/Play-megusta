@@ -1,0 +1,249 @@
+.hero {
+    position: relative;
+    min-height: 80vh;
+    padding-top: 100px;
+    display: flex;
+    align-items: center;
+}
+
+.backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.backdrop img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.4;
+}
+
+.overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, var(--bg-color) 10%, rgba(10, 10, 10, 0.6) 50%, rgba(10, 10, 10, 0.8) 100%);
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 4%;
+    width: 100%;
+}
+
+.content {
+    display: flex;
+    gap: 3rem;
+    align-items: flex-start;
+}
+
+.poster {
+    flex-shrink: 0;
+    width: 300px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8), var(--shadow-neon);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.poster img {
+    width: 100%;
+    aspect-ratio: 2/3;
+    object-fit: cover;
+}
+
+.info {
+    flex-grow: 1;
+}
+
+.title {
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-weight: 800;
+    margin-bottom: 1rem;
+}
+
+.metadata {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.rating {
+    color: var(--neon-cyan);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.runtime {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.genres {
+    display: flex;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+}
+
+.genreTag {
+    padding: 5px 15px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    font-size: 0.85rem;
+    transition: var(--transition-smooth);
+}
+
+.genreTag:hover {
+    border-color: var(--neon-fuchsia);
+    box-shadow: var(--shadow-neon);
+}
+
+.tagline {
+    font-style: italic;
+    font-size: 1.2rem;
+    color: var(--neon-cyan);
+    margin-bottom: 1rem;
+}
+
+.overview {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+    max-width: 800px;
+}
+
+.actions {
+    display: flex;
+    gap: 1rem;
+}
+
+.playBtn,
+.listBtn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 15px 30px;
+    border-radius: 8px;
+    font-weight: 700;
+    transition: var(--transition-smooth);
+}
+
+.playBtn {
+    background: #fff;
+    color: #000;
+}
+
+.playBtn:hover {
+    background: var(--neon-cyan);
+    transform: scale(1.05);
+}
+
+.listBtn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+}
+
+.listBtn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.castSection {
+    padding: 4rem 0;
+}
+
+.sectionTitle {
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
+    border-left: 4px solid var(--neon-fuchsia);
+    padding-left: 1rem;
+}
+
+.castGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 2rem;
+}
+
+.person {
+    text-align: center;
+}
+
+.personImage {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto 0.8rem;
+    border: 2px solid transparent;
+    transition: var(--transition-smooth);
+}
+
+.person:hover .personImage {
+    border-color: var(--neon-fuchsia);
+    box-shadow: var(--shadow-neon);
+    transform: scale(1.05);
+}
+
+.personImage img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.placeholder {
+    width: 100%;
+    height: 100%;
+    background: #222;
+}
+
+.name {
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+
+.character {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+@media (max-width: 1000px) {
+    .content {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .poster {
+        width: 200px;
+    }
+
+    .overview {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .actions {
+        justify-content: center;
+    }
+
+    .metadata {
+        justify-content: center;
+    }
+
+    .genres {
+        justify-content: center;
+    }
+}
