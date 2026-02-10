@@ -4,6 +4,9 @@ import Footer from '@/components/Footer';
 import Hero from '@/components/Hero';
 import Row from '@/components/Row';
 
+// Force dynamic rendering to avoid build-time API calls
+export const dynamic = 'force-dynamic';
+
 async function getKidsData() {
     const [popular, animation, family] = await Promise.all([
         fetchTMDB(TMDB_ENDPOINTS.discoverMovie, {

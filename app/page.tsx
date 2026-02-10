@@ -6,6 +6,9 @@ import { fetchTMDB, TMDB_ENDPOINTS, GENRE_MAP } from '@/lib/tmdb';
 
 import PersonalizedRows from '@/components/PersonalizedRows';
 
+// Force dynamic rendering to avoid build-time API calls
+export const dynamic = 'force-dynamic';
+
 async function getHomeData() {
   const [
     trending,

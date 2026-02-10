@@ -4,6 +4,9 @@ import Footer from '@/components/Footer';
 import Card from '@/components/Card';
 import styles from '../movies/Catalog.module.css';
 
+// Force dynamic rendering to avoid build-time API calls
+export const dynamic = 'force-dynamic';
+
 export default async function TVPage({ searchParams }: { searchParams: Promise<{ genre?: string }> }) {
     const { genre: genreId } = await searchParams;
 
