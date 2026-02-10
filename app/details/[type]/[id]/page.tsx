@@ -14,12 +14,15 @@ interface Props {
     }>;
 }
 
-// Generate static params for popular content
-export async function generateStaticParams() {
-    // Return empty array to make all pages dynamic (client-side rendered)
-    // This allows the build to complete without pre-generating all possible pages
+// Required for static export with dynamic routes
+export async function generateStaticParams(): Promise<{ type: string; id: string }[]> {
+    // Return empty array - pages will be generated on-demand
+    // This is required for Next.js static export with dynamic routes
     return [];
 }
+
+// Allow dynamic params at runtime
+export const dynamicParams = true;
 
 
 export default async function DetailsPage({ params }: Props) {
