@@ -211,6 +211,58 @@ function deduplicateByLink(items) {
     });
 }
 
+// Static Fallback News (Emergency Mode)
+const STATIC_NEWS_FALLBACK = [
+    {
+        title: "La inteligencia artificial transforma la industria musical global",
+        link: "https://www.billboard.com/",
+        summary: "Expertos analizan cómo las nuevas herramientas de IA están cambiando la producción y distribución de música en todo el mundo.",
+        source: "BILLBOARD",
+        publishedAt: new Date().toISOString(),
+        imageUrl: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=800"
+    },
+    {
+        title: "Nuevos avances en la exploración espacial hacia Marte",
+        link: "https://www.nasa.gov/",
+        summary: "La NASA anuncia nuevos plazos para la misión tripulada al planeta rojo, con tecnologías de propulsión revolucionarias.",
+        source: "NASA",
+        publishedAt: new Date().toISOString(),
+        imageUrl: "https://images.unsplash.com/photo-1614728853913-1e2203d9d73e?auto=format&fit=crop&q=80&w=800"
+    },
+    {
+        title: "El impacto del cambio climático en los océanos del sur",
+        link: "https://www.nationalgeographic.com/",
+        summary: "Un estudio revela datos preocupantes sobre el aumento de temperatura en las aguas antárticas y sus efectos en la fauna marina.",
+        source: "NATGEO",
+        publishedAt: new Date().toISOString(),
+        imageUrl: "https://images.unsplash.com/photo-1582967788606-a171f1080ca8?auto=format&fit=crop&q=80&w=800"
+    },
+    {
+        title: "Apple presenta sus gafas de realidad mixta Vision Pro",
+        link: "https://www.apple.com/",
+        summary: "La compañía tecnológica lanza su dispositivo más ambicioso en años, prometiendo revolucionar la computación espacial.",
+        source: "APPLE",
+        publishedAt: new Date().toISOString(),
+        imageUrl: "https://images.unsplash.com/photo-1621768216002-5ac171876625?auto=format&fit=crop&q=80&w=800"
+    },
+    {
+        title: "Chile lidera la transición energética en Latinoamérica",
+        link: "https://www.energia.gob.cl/",
+        summary: "El país andino se posiciona como referente mundial en producción de hidrógeno verde y energía solar.",
+        source: "GOB",
+        publishedAt: new Date().toISOString(),
+        imageUrl: "https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&q=80&w=800"
+    },
+    {
+        title: "Taylor Swift rompe récords con su The Eras Tour",
+        link: "https://www.rollingstone.com/",
+        summary: "La gira mundial de la artista estadounidense se convierte en la más taquillera de la historia de la música.",
+        source: "ROLLINGSTONE",
+        publishedAt: new Date().toISOString(),
+        imageUrl: "https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?auto=format&fit=crop&q=80&w=800"
+    }
+];
+
 // Main handler
 export async function onRequest(context) {
     const { request, env } = context;
@@ -234,43 +286,60 @@ export async function onRequest(context) {
     const topic = url.searchParams.get('topic') || 'world';
     const limit = Math.min(parseInt(url.searchParams.get('limit') || '60'), 120);
 
-    // Validate topic
-    if (!['world', 'tech', 'music', 'chile'].includes(topic)) {
-        return new Response(JSON.stringify([]), { headers });
-    }
-
     try {
         // Fetch from all RSS feeds in parallel
-        const feeds = RSS_FEEDS[topic] || RSS_FEEDS.world;
-        const rssResults = await Promise.all(
-            feeds.map(feed => fetchAndParseRSS(feed))
-        );
+        const feedUrls = RSS_FEEDS[topic] || RSS_FEEDS.world;
 
-        // Flatten and combine
-        let allItems = rssResults.flat();
+        let allItems = [];
 
-        // If RSS returned less than 40 items, use GNews API as fallback
-        if (allItems.length < 40 && env.GNEWS_API_KEY) {
+        // Try fetching RSS
+        try {
+            const rssPromises = feedUrls.map(url => fetchAndParseRSS(url));
+            const rssResults = await Promise.allSettled(rssPromises); // Use allSettled to avoid total failure
+
+            rssResults.forEach(result => {
+                if (result.status === 'fulfilled' && Array.isArray(result.value)) {
+                    allItems.push(...result.value);
+                }
+            });
+        } catch (e) {
+            console.error('RSS detailed error:', e);
+        }
+
+        // If RSS returned very few items, try GNews API as fallback
+        if (allItems.length < 10 && env.GNEWS_API_KEY) {
             console.log(`RSS returned only ${allItems.length} items, fetching from GNews...`);
-            const gNewsItems = await fetchGNewsAPI(topic, env.GNEWS_API_KEY, limit);
-            allItems = [...allItems, ...gNewsItems];
+            try {
+                const gNewsItems = await fetchGNewsAPI(topic, env.GNEWS_API_KEY, limit);
+                allItems = [...allItems, ...gNewsItems];
+            } catch (e) {
+                console.error('GNews error:', e);
+            }
         }
 
         // Validate, deduplicate, sort, and limit
-        const validItems = allItems.filter(item => item.title && item.link);
-        const uniqueItems = deduplicateByLink(validItems);
+        let validItems = allItems.filter(item => item.title && item.link);
+        let uniqueItems = deduplicateByLink(validItems);
+
+        // Critical Fallback: If we still have 0 items, use STATIC FALLBACK
+        if (uniqueItems.length === 0) {
+            console.warn('⚠️ No news found from any source. Using STATIC FALLBACK.');
+            uniqueItems = STATIC_NEWS_FALLBACK.map(item => ({
+                ...item,
+                title: `[Destacado] ${item.title}` // Prefix so we know it's fallback
+            }));
+        }
+
         const sortedItems = uniqueItems.sort((a, b) =>
             new Date(b.publishedAt) - new Date(a.publishedAt)
         );
         const finalItems = sortedItems.slice(0, limit);
 
-        console.log(`Returning ${finalItems.length} news items for topic: ${topic}`);
-
         return new Response(JSON.stringify(finalItems), { headers });
 
     } catch (error) {
-        console.error('News API error:', error);
-        // Never return 500, always return valid JSON
-        return new Response(JSON.stringify([]), { headers });
+        console.error('CRITICAL News API error:', error);
+        // On critical error, return fallback
+        return new Response(JSON.stringify(STATIC_NEWS_FALLBACK), { headers });
     }
 }
