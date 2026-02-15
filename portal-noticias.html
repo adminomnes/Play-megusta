@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noticias | Play Me Gusta</title>
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --news-bg: #0f0f13;
+            --card-bg: #1a1a24;
+            --accent: #ff4757;
+            --text: #ffffff;
+            --text-muted: #a0a0b0;
+        }
+
+        body {
+            background-color: var(--news-bg);
+            color: var(--text);
+            font-family: 'Outfit', sans-serif;
+            overflow-x: hidden;
+            margin: 0;
+        }
+
+        /* Navbar Override */
+        .navbar {
+            background: rgba(15, 15, 19, 0.95) !important;
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Hero News */
+        .hero-news {
+            height: 60vh;
+            min-height: 400px;
+            position: relative;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: flex-end;
+            margin-top: 60px;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, var(--news-bg) 0%, transparent 80%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            padding: 40px var(--container-padding);
+            width: 100%;
+            max-width: 900px;
+        }
+
+        .hero-tag {
+            background: var(--accent);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            display: inline-block;
+            margin-bottom: 12px;
+        }
+
+        .hero-title {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 16px;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-summary {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 700px;
+            line-height: 1.6;
+        }
+
+        /* News Grid */
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 60px var(--container-padding);
+        }
+
+        .news-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            cursor: pointer;
+            opacity: 0;
+            /* Animated fade in */
+            animation: fadeIn 0.5s forwards;
+        }
+
+        .news-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .card-image {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .card-source {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 700;
+        }
+
+        .card-content {
+            padding: 24px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        .card-excerpt {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .card-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 16px;
+        }
+
+        .read-more {
+            color: var(--accent);
+            font-weight: 600;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Skeleton System */
+        .skeleton-block {
+            background: #1a1a24;
+            position: relative;
+            overflow: hidden;
+            border-radius: 4px;
+        }
+
+        .skeleton-block::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            transform: translateX(-100%);
+            background-image: linear-gradient(90deg,
+                    rgba(255, 255, 255, 0) 0,
+                    rgba(255, 255, 255, 0.05) 20%,
+                    rgba(255, 255, 255, 0.1) 60%,
+                    rgba(255, 255, 255, 0));
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            100% {
+                transform: translateX(100%);
+            }
+        }
+
+        .sk-hero {
+            height: 60vh;
+            background: #15151c;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sk-card {
+            height: 400px;
+            background: #1a1a24;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .sk-img {
+            height: 200px;
+            width: 100%;
+            background: #20202b;
+        }
+
+        .sk-content {
+            padding: 24px;
+        }
+
+        .sk-line {
+            height: 16px;
+            background: #252532;
+            margin-bottom: 12px;
+            border-radius: 4px;
+        }
+
+        .sk-title {
+            height: 28px;
+            width: 80%;
+            background: #252532;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo" style="cursor: pointer;" onclick="window.location.href='play.html'">
+            <img src="https://i.ibb.co/Y4phrnwx/Chat-GPT-Image-8-feb-2026-22-26-29-removebg-preview.png" alt="Logo"
+                height="40">
+        </div>
+        <div class="nav-links">
+            <a href="play.html">Home</a>
+            <a href="noticias.html" class="active" style="color: var(--accent);">Noticias</a>
+        </div>
+    </nav>
+
+    <!-- Main Content with Skeleton Default -->
+    <main id="main-content">
+        <!-- Skeleton Hero -->
+        <div class="sk-hero skeleton-block">
+            <div style="text-align: center; width: 100%;">
+                <div class="sk-title skeleton-block" style="width: 400px; max-width: 90%; margin: 0 auto 20px;"></div>
+                <div class="sk-line skeleton-block" style="width: 300px; max-width: 80%; margin: 0 auto;"></div>
+            </div>
+        </div>
+
+        <!-- Skeleton Grid -->
+        <div class="news-grid">
+            <div class="sk-card">
+                <div class="sk-img skeleton-block"></div>
+                <div class="sk-content">
+                    <div class="sk-title skeleton-block"></div>
+                    <div class="sk-line skeleton-block"></div>
+                    <div class="sk-line skeleton-block"></div>
+                </div>
+            </div>
+            <div class="sk-card">
+                <div class="sk-img skeleton-block"></div>
+                <div class="sk-content">
+                    <div class="sk-title skeleton-block"></div>
+                    <div class="sk-line skeleton-block"></div>
+                    <div class="sk-line skeleton-block"></div>
+                </div>
+            </div>
+            <div class="sk-card">
+                <div class="sk-img skeleton-block"></div>
+                <div class="sk-content">
+                    <div class="sk-title skeleton-block"></div>
+                    <div class="sk-line skeleton-block"></div>
+                    <div class="sk-line skeleton-block"></div>
+                </div>
+            </div>
+            <div class="sk-card">
+                <div class="sk-img skeleton-block"></div>
+                <div class="sk-content">
+                    <div class="sk-title skeleton-block"></div>
+                    <div class="sk-line skeleton-block"></div>
+                    <div class="sk-line skeleton-block"></div>
+                </div>
+            </div>
+            <div class="sk-card">
+                <div class="sk-img skeleton-block"></div>
+                <div class="sk-content">
+                    <div class="sk-title skeleton-block"></div>
+                    <div class="sk-line skeleton-block"></div>
+                    <div class="sk-line skeleton-block"></div>
+                </div>
+            </div>
+            <div class="sk-card">
+                <div class="sk-img skeleton-block"></div>
+                <div class="sk-content">
+                    <div class="sk-title skeleton-block"></div>
+                    <div class="sk-line skeleton-block"></div>
+                    <div class="sk-line skeleton-block"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const main = document.getElementById('main-content');
+
+            try {
+                // Fetch news from our robust API
+                const response = await fetch('/api/news');
+                let news = [];
+
+                if (response.ok) {
+                    news = await response.json();
+                } else {
+                    console.error('API Error, using fallback');
+                    news = [{ title: "Fallo conexión", source: "System" }]; // Should be handled by API anyway
+                }
+
+                // Double check we have data (API should guarantee it, but just in case)
+                if (!news || news.length === 0) throw new Error("No data");
+
+                // Render
+                renderNews(news);
+
+            } catch (error) {
+                console.error("Critical Error:", error);
+                // Fallback UI if everything explodes
+                main.innerHTML = `<div class="hero-news"><div class="hero-content"><h1 class="hero-title">No se pudieron cargar las noticias.</h1><p>Por favor revisa tu conexión.</p></div></div>`;
+            }
+        });
+
+        function renderNews(articles) {
+            const main = document.getElementById('main-content');
+
+            // Pick Hero (First item with image)
+            const heroIdx = articles.findIndex(a => a.imageUrl);
+            const heroArticle = heroIdx >= 0 ? articles[heroIdx] : articles[0];
+
+            // Remaining articles
+            const gridArticles = articles.filter((_, i) => i !== heroIdx);
+
+            let html = '';
+
+            // Hero HTML
+            if (heroArticle) {
+                html += `
+                <section class="hero-news" style="background-image: url('${heroArticle.imageUrl || 'https://images.unsplash.com/photo-1585829365295-ab7cd400c167?w=1200'}');">
+                    <div class="hero-overlay"></div>
+                    <div class="hero-content">
+                        <span class="hero-tag">DESTACADO</span>
+                        <h1 class="hero-title">${truncate(heroArticle.title, 80)}</h1>
+                        <p class="hero-summary">${truncate(heroArticle.summary, 180)}</p>
+                        <a href="${heroArticle.link}" target="_blank" class="read-more" style="margin-top: 20px; font-size: 1.1rem; display: inline-flex;">
+                            Leer noticia completa <i data-lucide="arrow-right"></i>
+                        </a>
+                    </div>
+                </section>
+                `;
+            }
+
+            // Grid HTML
+            html += `<div class="news-grid">`;
+            gridArticles.forEach((article, index) => {
+                const img = article.imageUrl || `https://source.unsplash.com/random/800x600?news&sig=${index}`;
+                const date = new Date(article.publishedAt).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
+
+                html += `
+                <article class="news-card" style="animation-delay: ${index * 0.1}s" onclick="window.open('${article.link}', '_blank')">
+                    <div class="card-image" style="background-image: url('${img}');">
+                        <span class="card-source">${article.source || 'NOTICIA'}</span>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">${article.title}</h3>
+                        <p class="card-excerpt">${truncate(article.summary || '', 100)}</p>
+                        <div class="card-meta">
+                            <span>${date}</span>
+                            <span class="read-more">Leer más <i data-lucide="arrow-right" size="14"></i></span>
+                        </div>
+                    </div>
+                </article>
+                `;
+            });
+            html += `</div>`;
+
+            main.innerHTML = html;
+            lucide.createIcons();
+        }
+
+        function truncate(str, n) {
+            if (!str) return '';
+            return (str.length > n) ? str.substr(0, n - 1) + '...' : str;
+        }
+    </script>
+</body>
+
+</html>
