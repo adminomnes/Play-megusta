@@ -1,0 +1,356 @@
+/* ============================================================
+   LANDING PAGE — Enefti NFT Style (Metaverse Edition)
+   ============================================================ */
+
+/* Import Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100;300;400;500;600;700;800;900&display=swap');
+
+:root {
+    --nft-purple: #6c5ce7;
+    --nft-blue: #0984e3;
+    --nft-pink: #fd79a8;
+    --nft-dark: #130f40;
+    --nft-bg: #0c0c16;
+    --glass-border: rgba(255, 255, 255, 0.1);
+}
+
+body {
+    background-color: var(--nft-bg);
+    overflow-x: hidden;
+    position: relative;
+    font-family: 'Outfit', sans-serif;
+    color: #fff;
+    margin: 0;
+}
+
+/* ── 3D Metaverse Background (CSS Only) ── */
+.aurora-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    overflow: hidden;
+    background: radial-gradient(circle at 50% 50%, #1a1a2e 0%, #000 100%);
+}
+
+.aurora-blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.5;
+    animation: floatMetaverse 20s infinite alternate ease-in-out;
+}
+
+/* Sphere imitation with gradients */
+.blob-1 {
+    width: 60vh;
+    height: 60vh;
+    background: radial-gradient(circle at 30% 30%, rgba(108, 92, 231, 1), rgba(108, 92, 231, 0));
+    top: -10%;
+    left: -10%;
+}
+
+.blob-2 {
+    width: 70vh;
+    height: 70vh;
+    background: radial-gradient(circle at 70% 30%, rgba(9, 132, 227, 0.8), rgba(9, 132, 227, 0));
+    bottom: -15%;
+    right: -10%;
+    animation-delay: -5s;
+}
+
+.blob-3 {
+    width: 40vh;
+    height: 40vh;
+    background: radial-gradient(circle at 50% 50%, rgba(253, 121, 168, 0.9), rgba(253, 121, 168, 0));
+    top: 40%;
+    left: 45%;
+    animation-delay: -10s;
+    mix-blend-mode: screen;
+}
+
+@keyframes floatMetaverse {
+    0% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    100% {
+        transform: translate(30px, -30px) scale(1.1);
+    }
+}
+
+/* ── Floating 3D Shapes (CSS) ── */
+.shape {
+    position: absolute;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.01));
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    z-index: -1;
+    animation: rotate 30s linear infinite;
+}
+
+.shape-1 {
+    width: 100px;
+    height: 100px;
+    top: 15%;
+    right: 20%;
+    animation-duration: 25s;
+}
+
+.shape-2 {
+    width: 60px;
+    height: 60px;
+    bottom: 25%;
+    left: 15%;
+    animation-duration: 35s;
+}
+
+.shape-3 {
+    width: 150px;
+    height: 150px;
+    bottom: 10%;
+    right: 35%;
+    opacity: 0.3;
+}
+
+/* ── Content Portal ── */
+.loading-portal {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+/* ── Logo Area ── */
+.brand-logo-massive {
+    margin-bottom: 20px;
+    z-index: 20;
+    position: relative;
+    text-align: center;
+}
+
+.brand-logo-massive img {
+    height: 120px;
+    /* More subtle, like Enefti header */
+    width: auto;
+    filter: drop-shadow(0 0 30px rgba(108, 92, 231, 0.6));
+    animation: logoPulse 4s ease-in-out infinite;
+}
+
+@keyframes logoPulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+        filter: drop-shadow(0 0 30px rgba(108, 92, 231, 0.6));
+    }
+
+    50% {
+        transform: scale(1.05);
+        filter: drop-shadow(0 0 50px rgba(108, 92, 231, 0.8));
+    }
+}
+
+/* ── Auth Card (The Glass Prism) ── */
+.auth-portal-card {
+    width: 100%;
+    max-width: 440px;
+    background: rgba(20, 20, 35, 0.6);
+    backdrop-filter: blur(40px) saturate(180%);
+    -webkit-backdrop-filter: blur(40px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 40px;
+    padding: 50px 40px;
+    box-shadow:
+        0 40px 100px rgba(0, 0, 0, 0.8),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.05),
+        0 0 40px rgba(108, 92, 231, 0.1);
+    /* Subtle purple glow */
+    z-index: 30;
+    transform: translateY(0);
+    transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Top accent line */
+.auth-portal-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, var(--nft-purple), var(--nft-pink));
+}
+
+.auth-portal-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 50px 120px rgba(0, 0, 0, 0.9), inset 0 0 0 1px rgba(255, 255, 255, 0.15), 0 0 60px rgba(108, 92, 231, 0.2);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* ── Tabs ── */
+.auth-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 35px;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 5px;
+    border-radius: 50px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.auth-tabs button {
+    flex: 1;
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.9rem;
+    font-weight: 600;
+    padding: 12px 20px;
+    cursor: pointer;
+    border-radius: 40px;
+    transition: 0.3s;
+    font-family: 'Outfit', sans-serif;
+}
+
+.auth-tabs button.active {
+    background: linear-gradient(135deg, var(--nft-purple), var(--nft-blue));
+    color: #fff;
+    box-shadow: 0 4px 15px rgba(108, 92, 231, 0.4);
+}
+
+/* ── Inputs ── */
+.auth-input {
+    width: 100%;
+    padding: 18px 24px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 2px solid rgba(255, 255, 255, 0.05);
+    color: #fff;
+    font-size: 1rem;
+    margin-bottom: 18px;
+    outline: none;
+    transition: all 0.3s ease;
+    font-family: 'Outfit', sans-serif;
+}
+
+.auth-input:focus {
+    background: rgba(255, 255, 255, 0.07);
+    border-color: var(--nft-purple);
+    box-shadow: 0 0 20px rgba(108, 92, 231, 0.2);
+    transform: translateY(-2px);
+}
+
+.auth-input::placeholder {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+/* ── Submit Button ── */
+.btn-submit {
+    width: 100%;
+    padding: 22px;
+    border-radius: 20px;
+    background: linear-gradient(90deg, var(--nft-purple), var(--nft-pink));
+    color: #fff;
+    font-weight: 800;
+    font-size: 1.1rem;
+    border: none;
+    cursor: pointer;
+    letter-spacing: 1px;
+    margin-top: 15px;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 30px rgba(253, 121, 168, 0.3);
+    text-transform: uppercase;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-submit::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: 0.5s;
+}
+
+.btn-submit:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 15px 40px rgba(253, 121, 168, 0.5);
+}
+
+.btn-submit:hover::after {
+    left: 100%;
+}
+
+/* ── Socials ── */
+.social-links {
+    margin-top: 35px;
+    padding-top: 25px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+}
+
+.social-links a {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.social-links a:hover {
+    background: #fff;
+    color: var(--nft-purple);
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+    .loading-portal {
+        padding-top: 40px;
+        justify-content: center;
+    }
+
+    .brand-logo-massive img {
+        height: 100px;
+    }
+
+    .auth-portal-card {
+        padding: 35px 25px;
+        border-radius: 30px;
+    }
+}
+
+@media (max-width: 480px) {
+    .brand-logo-massive img {
+        height: 80px;
+    }
+
+    .auth-portal-card {
+        padding: 30px 20px;
+    }
+
+    .btn-submit {
+        padding: 18px;
+        font-size: 1rem;
+    }
+}

@@ -1,0 +1,1258 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Globinobys - Play Me Gusta Kids</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description"
+        content="Área infantil segura y divertida de Play Me Gusta. Música cuidadosamente seleccionada para niños.">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/a11y.css">
+    <script defer src="assets/a11y.js"></script>
+
+    <!-- Custom Design System -->
+    <link rel="stylesheet" href="css/globinobys.css">
+
+    <link rel="icon" type="image/png" href="https://i.ibb.co/sdNCjFn8/Chat-GPT-Image-7-feb-2026-11-56-45-p-m.png">
+
+    <style>
+        /* ===== Magic Particles Canvas ===== */
+        #magicParticles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        /* ===== Kids Badge ===== */
+        .kids-badge {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            padding: 8px 15px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.8rem;
+            font-weight: 800;
+            color: #4D96FF;
+            border: 2px solid rgba(109, 213, 250, 0.5);
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(109, 213, 250, 0.3);
+        }
+
+        .kids-badge:hover {
+            transform: translateY(-50%) scale(1.05);
+            background: #fff;
+            box-shadow: 0 8px 25px rgba(109, 213, 250, 0.5);
+        }
+
+        /* ===== PIN Modal Overlay ===== */
+        .pin-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(15px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 99999;
+            font-family: 'Outfit', sans-serif;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .pin-card {
+            background: linear-gradient(145deg, #ffffff, #f0f4ff);
+            padding: 45px 40px;
+            border-radius: 35px;
+            text-align: center;
+            width: 90%;
+            max-width: 420px;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4), 0 0 40px rgba(109, 213, 250, 0.2);
+            animation: slideUp 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px) scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .pin-card .lock-icon {
+            font-size: 50px;
+            margin-bottom: 10px;
+        }
+
+        .pin-card h2 {
+            color: #1a1a2e;
+            margin-bottom: 8px;
+            font-weight: 900;
+            font-size: 1.5rem;
+        }
+
+        .pin-card p {
+            color: #666;
+            margin-bottom: 25px;
+            font-size: 0.95rem;
+        }
+
+        .pin-inputs {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .pin-inputs input {
+            width: 55px;
+            height: 65px;
+            text-align: center;
+            font-size: 26px;
+            font-weight: 800;
+            border: 3px solid #e0e0e0;
+            border-radius: 16px;
+            outline: none;
+            font-family: 'Outfit', sans-serif;
+            transition: 0.3s;
+            background: #fafafa;
+        }
+
+        .pin-inputs input:focus {
+            border-color: #4D96FF;
+            box-shadow: 0 0 20px rgba(77, 150, 255, 0.3);
+            background: #fff;
+        }
+
+        .pin-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .pin-btn {
+            flex: 1;
+            padding: 16px;
+            border-radius: 16px;
+            border: none;
+            cursor: pointer;
+            font-weight: 800;
+            font-size: 1rem;
+            font-family: 'Outfit', sans-serif;
+            transition: 0.3s;
+        }
+
+        .pin-btn.cancel {
+            background: #f0f0f0;
+            color: #555;
+        }
+
+        .pin-btn.cancel:hover {
+            background: #e0e0e0;
+        }
+
+        .pin-btn.confirm {
+            background: linear-gradient(135deg, #4D96FF, #6DD5FA);
+            color: #fff;
+            box-shadow: 0 8px 20px rgba(77, 150, 255, 0.4);
+        }
+
+        .pin-btn.confirm:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(77, 150, 255, 0.5);
+        }
+
+        .pin-error {
+            color: #FF6B6B;
+            margin-top: 15px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        .pin-hint {
+            color: #aaa;
+            font-size: 0.75rem;
+            margin-top: 15px;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .kids-badge {
+                position: static;
+                transform: none;
+                margin-top: 10px;
+                font-size: 0.7rem;
+                padding: 6px 12px;
+            }
+
+            .kids-badge:hover {
+                transform: scale(1.05);
+            }
+
+            .pin-card {
+                padding: 30px 25px;
+                border-radius: 25px;
+            }
+
+            .pin-inputs input {
+                width: 48px;
+                height: 55px;
+                font-size: 22px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .pin-inputs {
+                gap: 8px;
+            }
+
+            .pin-inputs input {
+                width: 42px;
+                height: 50px;
+                font-size: 20px;
+                border-radius: 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <a class="skip-link" href="#main">Saltar al contenido</a>
+    <!-- Background Elements -->
+    <div class="bg-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <!-- Header Area - Clean Logo -->
+    <header class="kids-header">
+        <div class="back-home" id="exitKids" style="cursor: pointer;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="m15 18-6-6 6-6" />
+            </svg>
+            <span>Salir</span>
+        </div>
+
+        <!-- Large Clean Logo -->
+        <div class="hero-logo-area">
+            <img src="https://i.ibb.co/sdNCjFn8/Chat-GPT-Image-7-feb-2026-11-56-45-p-m.png" alt="GlobinoBys"
+                class="hero-logo">
+        </div>
+
+    </header>
+
+    <canvas id="magicParticles"></canvas>
+
+    <!-- Main Content Area -->
+    <main id="main" class="content-container"
+        style="max-width: 1200px; margin: 0 auto; padding: 10px 20px 200px; position: relative; z-index: 10;">
+
+        <!-- ADVENTURE HUB (Islands Nav) -->
+        <section class="adventure-hub"
+            style="margin-bottom: 60px; text-align: center; position: relative; z-index: 20;">
+            <h2 class="section-title" style="margin-bottom: 30px; font-size: 2.2rem; color: #4a3a6a;">¡Tu Próxima
+                Aventura! 🚀</h2>
+            <div class="islands-nav"
+                style="display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; padding: 10px;">
+
+                <div onclick="window.globinobysWorld.openIsland('math')"
+                    style="cursor:pointer; transition:0.4s; width: 140px;"
+                    onmouseover="this.style.transform='translateY(-12px)'"
+                    onmouseout="this.style.transform='translateY(0)'">
+                    <div
+                        style="background: linear-gradient(135deg, #4D96FF, #3A73C8); height: 110px; width: 110px; margin: 0 auto; border-radius: 35px; display: grid; place-items: center; box-shadow: 0 15px 35px rgba(77,150,255,0.4); border: 4px solid #fff; font-size: 3.5rem;">
+                        🔢</div>
+                    <div
+                        style="margin-top: 15px; font-weight: 900; color: #3A73C8; font-size: 1rem; letter-spacing: 1px;">
+                        MATE</div>
+                </div>
+
+                <div onclick="window.globinobysWorld.openIsland('reading')"
+                    style="cursor:pointer; transition:0.4s; width: 140px;"
+                    onmouseover="this.style.transform='translateY(-12px)'"
+                    onmouseout="this.style.transform='translateY(0)'">
+                    <div
+                        style="background: linear-gradient(135deg, #FF6B6B, #D64545); height: 110px; width: 110px; margin: 0 auto; border-radius: 35px; display: grid; place-items: center; box-shadow: 0 15px 35px rgba(255,107,107,0.4); border: 5px solid #fff; font-size: 3.5rem;">
+                        📚</div>
+                    <div
+                        style="margin-top: 15px; font-weight: 900; color: #D64545; font-size: 1rem; letter-spacing: 1px;">
+                        LECTURA</div>
+                </div>
+
+                <div onclick="window.globinobysWorld.openIsland('science')"
+                    style="cursor:pointer; transition:0.4s; width: 140px;"
+                    onmouseover="this.style.transform='translateY(-12px)'"
+                    onmouseout="this.style.transform='translateY(0)'">
+                    <div
+                        style="background: linear-gradient(135deg, #6BCB77, #4CAF50); height: 110px; width: 110px; margin: 0 auto; border-radius: 35px; display: grid; place-items: center; box-shadow: 0 15px 35px rgba(107,203,119,0.4); border: 5px solid #fff; font-size: 3.5rem;">
+                        🧪</div>
+                    <div
+                        style="margin-top: 15px; font-weight: 900; color: #4CAF50; font-size: 1rem; letter-spacing: 1px;">
+                        CIENCIA</div>
+                </div>
+
+                <div onclick="window.globinobysWorld.openIsland('logic')"
+                    style="cursor:pointer; transition:0.4s; width: 140px;"
+                    onmouseover="this.style.transform='translateY(-12px)'"
+                    onmouseout="this.style.transform='translateY(0)'">
+                    <div
+                        style="background: linear-gradient(135deg, #FFD93D, #F4C430); height: 110px; width: 110px; margin: 0 auto; border-radius: 35px; display: grid; place-items: center; box-shadow: 0 15px 35px rgba(255,217,61,0.4); border: 5px solid #fff; font-size: 3.5rem;">
+                        🧩</div>
+                    <div
+                        style="margin-top: 15px; font-weight: 900; color: #B8860B; font-size: 1rem; letter-spacing: 1px;">
+                        LÓGICA</div>
+                </div>
+
+                <div onclick="window.globinobysWorld.openIsland('creative')"
+                    style="cursor:pointer; transition:0.4s; width: 140px;"
+                    onmouseover="this.style.transform='translateY(-12px)'"
+                    onmouseout="this.style.transform='translateY(0)'">
+                    <div
+                        style="background: linear-gradient(135deg, #FF9F45, #E67E22); height: 110px; width: 110px; margin: 0 auto; border-radius: 35px; display: grid; place-items: center; box-shadow: 0 15px 35px rgba(255,159,69,0.4); border: 5px solid #fff; font-size: 3.5rem;">
+                        🎨</div>
+                    <div
+                        style="margin-top: 15px; font-weight: 900; color: #E67E22; font-size: 1rem; letter-spacing: 1px;">
+                        ARTE</div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- MAGIC MUSIC COLLECTION -->
+        <section id="mainMusicView" style="position: relative; z-index: 5; margin-top: 40px;">
+            <h2 class="section-title" style="font-size: 2.2rem; color: #4a3a6a; margin-bottom: 35px;">Tu Colección
+                Mágica 🎵</h2>
+            <div class="songs-grid" id="songsGrid"
+                style="display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 30px;">
+                <!-- Dynamically populated -->
+            </div>
+        </section>
+
+        <!-- FLOBI MASCOT -->
+        <div class="flobi-mascot" id="flobiMascot" style="z-index: 100;">
+            <div class="flobi-speech" id="flobiSpeech">¡Hola! Soy Globi. ✨</div>
+            <img src="https://i.ibb.co/sdNCjFn8/Chat-GPT-Image-7-feb-2026-11-56-45-p-m.png" alt="Globi"
+                class="flobi-img">
+        </div>
+
+        <!-- GAME/ACTIVITY VIEW OVERLAY -->
+        <div class="game-view-overlay" id="gameView" style="z-index: 1000;">
+            <div class="game-view-header">
+                <h2 class="section-title" id="gameViewTitle">Cargando...</h2>
+                <button class="close-game" onclick="window.globinobysWorld.closeIsland()">✕</button>
+            </div>
+            <div id="gameContent"
+                style="flex:1; padding: 20px; display: flex; flex-direction: column; align-items: center; overflow-y: auto;">
+                <!-- content -->
+            </div>
+        </div>
+    </main>
+    <!-- Custom RMG Player Integration -->
+    <footer class="kids-player-fixed"
+        style="width:100vw; margin-left:calc(-50vw + 50%); bottom: 0; left: 0; right: 0; position: fixed; z-index: 1000;">
+        <div id="rmg-player" style="
+ width:100%;
+        border-radius:18px 18px 0 0;
+        background:linear-gradient(135deg, #0b1220, #1a2a4a);
+        box-shadow:0 -10px 35px rgba(0, 255, 255, .15);
+        padding:14px 40px;
+        box-sizing:border-box;
+        font-family:'Outfit',
+        sans-serif;
+        color:#fff;
+        display:flex;
+        align-items:center;
+        gap:20px;
+        flex-wrap:wrap;
+        border-top: 2px solid rgba(255, 255, 255, 0.1);
+        ">
+            <!-- Logo --><img src="https://i.ibb.co/sdNCjFn8/Chat-GPT-Image-7-feb-2026-11-56-45-p-m.png"
+                alt="Radio Me Gusta" style="
+ width:64px;
+        height:64px;
+        border-radius:16px;
+        object-fit:cover;
+        box-shadow:0 0 18px rgba(77, 150, 255, .35);
+        background:rgba(255, 255, 255, .04);
+        border: 2px solid #fff;
+        " id=" rmgCover">
+
+            <!-- Info -->
+            <div style="flex:1;min-width:120px;">
+                <div id="rmgTitle" style="font-weight:900;font-size:20px;line-height:1.2; color: #fff;">
+                    Seleccionando... </div>
+                <div id="rmgArtist" style="opacity:.82;font-size:14px;margin-top:2px; color: #a1c4fd;">
+                    Globinobys </div>
+                <!-- Progress -->
+                <div style="display:flex;align-items:center;gap:12px;margin-top:10px;"><span id="rmgTime"
+                        style="font-size:12px;opacity:.8;min-width:44px; font-weight: 600;">0:00</span><input
+                        id="rmgSeek" type="range" min="0" max="100" value="0" style="flex:1; cursor: pointer;"><span
+                        id="rmgDur" style="font-size:12px;opacity:.8;min-width:44px; font-weight: 600;">0:00</span>
+                </div>
+            </div>
+            <!-- Controls -->
+            <div style="display:flex;align-items:center;gap:15px;"><button id="rmgPrev"
+                    style="all:unset;cursor:pointer;width:45px;height:45px;border-radius:14px;background:rgba(255,255,255,.1); display:flex; align-items:center; justify-content:center; font-size: 20px; transition: 0.2s;">⏮
+                </button><button id="rmgPlay" style="
+ all:unset;
+        cursor:pointer;
+        width:60px;
+        height:60px;
+        border-radius:20px;
+        display:grid;
+        place-items:center;
+        background:linear-gradient(135deg, #4D96FF, #FF6B6B);
+        color:#fff;
+        font-weight:900;
+        box-shadow:0 0 25px rgba(77, 150, 255, .4);
+        font-size:24px;
+        transition: 0.3s;
+        ">▶</button>
+
+                <button id="rmgNext"
+                    style="all:unset;cursor:pointer;width:45px;height:45px;border-radius:14px;background:rgba(255,255,255,.1); display:flex; align-items:center; justify-content:center; font-size: 20px; transition: 0.2s;">⏭
+                </button>
+                <div class="volume-control"
+                    style="display:flex;align-items:center;gap:10px;margin-left:10px; background: rgba(255,255,255,0.05); padding: 8px 15px; border-radius: 20px;">
+                    <span style="font-size:16px;">🔊</span><input id="rmgVol" type="range" min="0" max="100" value="85"
+                        style="width:100px; cursor: pointer;">
+                </div>
+            </div><audio id="rmgAudio" preload="none"></audio>
+        </div>
+    </footer>
+    <audio id="bubbleSound" src="https://assets.mixkit.co/active_storage/sfx/707/707-preview.mp3"
+        preload="auto"></audio>
+    <audio id="successSound" src="https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3"
+        preload="auto"></audio>
+    <audio id="failureSound" src="https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3"
+        preload="auto"></audio>
+    <!-- Scripts -->
+    <script src="js/flow-controller.js"></script>
+    <script src="js/profile-manager.js"></script>
+    <script> // ===== AUTHORIZATION =====
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.FlowController) window.FlowController.checkAccess();
+        });
+
+        // ===== PIN EXIT SYSTEM =====
+        const bubble = document.getElementById('bubbleSound');
+
+        const playBubble = () => {
+            bubble.currentTime = 0;
+
+            bubble.play().catch(() => { });
+        }
+
+            ;
+
+        // Exit button → Show PIN
+        document.getElementById('exitKids').onclick = () => {
+            playBubble();
+            showPinModal();
+        }
+
+            ;
+
+        function showPinModal() {
+            // Remove existing modals
+            const existing = document.getElementById('pinOverlay');
+            if (existing) existing.remove();
+
+            const overlay = document.createElement('div');
+            overlay.id = 'pinOverlay';
+            overlay.className = 'pin-overlay';
+            overlay.innerHTML = ` <div class="pin-card"><div class="lock-icon">🔒</div><h2>Acceso Parental</h2><p>Ingresa el código de 4 dígitos para salir del modo infantil</p><div class="pin-inputs"><input type="tel" maxlength="1" inputmode="numeric" pattern="[0-9]" id="pin1" autocomplete="off"><input type="tel" maxlength="1" inputmode="numeric" pattern="[0-9]" id="pin2" autocomplete="off"><input type="tel" maxlength="1" inputmode="numeric" pattern="[0-9]" id="pin3" autocomplete="off"><input type="tel" maxlength="1" inputmode="numeric" pattern="[0-9]" id="pin4" autocomplete="off"></div><div class="pin-buttons"><button class="pin-btn cancel" id="pinCancel">Cancelar</button><button class="pin-btn confirm" id="pinConfirm">Confirmar</button></div><p class="pin-error" id="pinError">❌ PIN incorrecto. Intenta de nuevo.</p><p class="pin-hint">PIN por defecto: 1234</p> </div> `;
+
+            document.body.appendChild(overlay);
+
+            // Get inputs
+            const inputs = ['pin1',
+                'pin2',
+                'pin3',
+                'pin4'].map(id => document.getElementById(id));
+
+            // Focus first
+            setTimeout(() => inputs[0].focus(), 100);
+
+            // Auto-advance logic
+            inputs.forEach((inp, i) => {
+                inp.oninput = () => {
+                    // Only allow numbers
+                    inp.value = inp.value.replace(/[^0-9]/g, '');
+                    if (inp.value && i < 3) inputs[i + 1].focus();
+
+                    // Auto-submit when all 4 filled
+                    if (i === 3 && inp.value) {
+                        setTimeout(() => submitPin(inputs, overlay), 150);
+                    }
+                }
+
+                    ;
+
+                inp.onkeydown = (e) => {
+                    if (e.key === 'Backspace' && !inp.value && i > 0) {
+                        inputs[i - 1].focus();
+                    }
+
+                    if (e.key === 'Escape') {
+                        overlay.remove();
+                    }
+                }
+
+                    ;
+            });
+
+            // Buttons
+            document.getElementById('pinCancel').onclick = () => overlay.remove();
+            document.getElementById('pinConfirm').onclick = () => submitPin(inputs, overlay);
+
+            // Click outside to close
+            overlay.onclick = (e) => {
+                if (e.target === overlay) overlay.remove();
+            }
+
+                ;
+        }
+
+        function submitPin(inputs, overlay) {
+            const pin = inputs.map(i => i.value).join('');
+            const CORRECT_PIN = localStorage.getItem('kids_pin') || '1234';
+
+            if (pin === CORRECT_PIN) {
+
+                // Success! Exit kids mode
+                if (window.FlowController) {
+                    window.FlowController.setProfileMode('adult');
+                }
+
+                overlay.remove();
+                // Redirect to profiles or main page
+                window.location.href = 'profiles.html';
+            }
+
+            else {
+                // Error
+                const errorEl = document.getElementById('pinError');
+                errorEl.style.display = 'block';
+                inputs.forEach(i => i.value = '');
+                inputs[0].focus();
+
+                // Shake animation
+                const card = overlay.querySelector('.pin-card');
+                card.style.animation = 'none';
+                card.offsetHeight; // Trigger reflow
+                card.style.animation = 'shake 0.4s ease';
+
+                setTimeout(() => {
+                    errorEl.style.display = 'none';
+                }
+
+                    , 3000);
+            }
+        }
+
+        // Shake animation
+        const shakeStyle = document.createElement('style');
+
+        shakeStyle.textContent = ` @keyframes shake {
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            25% {
+                transform: translateX(-10px);
+            }
+
+            75% {
+                transform: translateX(10px);
+            }
+        }
+
+        `;
+        document.head.appendChild(shakeStyle);
+
+        // Click sound on all cards
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('.song-card') || e.target.closest('button')) {
+                playBubble();
+            }
+        });
+
+        // ===== PARTICLES EFFECT =====
+        const canvas = document.getElementById('magicParticles');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        window.triggerBurst = function (x, y) {
+            for (let i = 0; i < 30; i++) {
+                particles.push(new Particle(x || window.innerWidth / 2, y || window.innerHeight / 2));
+            }
+        };
+
+        const balloonImg = new Image();
+        balloonImg.src = 'https://i.ibb.co/sdNCjFn8/Chat-GPT-Image-7-feb-2026-11-56-45-p-m.png';
+
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        class Particle {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.size = Math.random() * 8 + 2;
+                this.speedX = Math.random() * 2 - 1;
+                this.speedY = Math.random() * 2 - 1;
+                const colors = ['#81ECEC',
+                    '#FFB8B8',
+                    '#FFE38E',
+                    '#D4B6FF',
+                    '#A1C4FD'];
+                this.color = colors[Math.floor(Math.random() * colors.length)];
+                this.opacity = 1;
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                this.opacity -= 0.015;
+                if (this.size > 0.1) this.size -= 0.05;
+            }
+
+            draw() {
+                ctx.globalAlpha = this.opacity;
+                // Draw Balloon instead of star/circle
+                if (balloonImg.complete) {
+                    ctx.drawImage(balloonImg, this.x - this.size, this.y - this.size, this.size * 2, this.size * 2);
+                } else {
+                    ctx.fillStyle = this.color;
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = this.color;
+            }
+        }
+
+        class GlobinobysWorld {
+            constructor() {
+                const saved = JSON.parse(localStorage.getItem('globinobys_state')) || {};
+                this.state = {
+                    xp: saved.xp || 0,
+                    level: saved.level || 1,
+                    globipuntos: saved.globipuntos || 0
+                };
+
+                this.levelEl = document.getElementById('playerLevel');
+                this.xpBar = document.getElementById('xpBarFill');
+                this.rankEl = document.getElementById('playerRank');
+                this.gameView = document.getElementById('gameView');
+                this.gameContent = document.getElementById('gameContent');
+                this.gameTitle = document.getElementById('gameViewTitle');
+                this.flobiSpeech = document.getElementById('flobiSpeech');
+
+                this.ranks = ['Explorador', 'Aventurero', 'Genio', 'Maestro', 'Leyenda'];
+                this.init();
+            }
+
+            init() {
+                this.updateUI();
+                this.setupMascot();
+                this.welcomeMessage();
+            }
+
+            save() {
+                localStorage.setItem('globinobys_state', JSON.stringify(this.state));
+            }
+
+            updateUI() {
+                if (this.levelEl) this.levelEl.textContent = `Nv. ${this.state.level}`;
+                document.querySelectorAll('.globipuntos-value-sync').forEach(el => {
+                    el.textContent = this.state.globipuntos;
+                });
+                const xpForNext = this.state.level * 100;
+                const p = (this.state.xp / xpForNext) * 100;
+                if (this.xpBar) this.xpBar.style.width = `${p}%`;
+            }
+
+            addXP(amt) {
+                this.state.xp += amt;
+                const xpForNext = this.state.level * 100;
+                if (this.state.xp >= xpForNext) {
+                    this.levelUp();
+                }
+                this.updateUI();
+                this.save();
+            }
+
+            levelUp() {
+                this.state.level++;
+                this.state.xp = 0;
+                this.speak(`¡INCREÍBLE! 🎉 ¡Has subido al nivel ${this.state.level}! Eres genial.`);
+            }
+
+            speak(text, duration = 4000) {
+                if (!this.flobiSpeech) return;
+                this.flobiSpeech.textContent = text;
+                this.flobiSpeech.classList.add('active');
+                setTimeout(() => this.flobiSpeech.classList.remove('active'), duration);
+            }
+
+            getPointsHTML(size = 'small') {
+                const isSmall = size === 'small';
+                return `
+                    <div class="globipuntos-card" style="
+                        background: linear-gradient(135deg, #FFD93D, #FF8E00);
+                        padding: ${isSmall ? '8px 20px' : '10px 30px'};
+                        border-radius: 20px;
+                        color: #fff;
+                        font-weight: 900;
+                        font-size: ${isSmall ? '1.2rem' : '1.5rem'};
+                        display: flex;
+                        align-items: center;
+                        gap: 10px;
+                        box-shadow: 0 8px 20px rgba(255, 142, 0, 0.3);
+                        border: 3px solid #fff;
+                        margin-top: 25px;
+                    ">
+                        <img src="https://i.ibb.co/sdNCjFn8/Chat-GPT-Image-7-feb-2026-11-56-45-p-m.png" style="width: 30px; height: 30px; border-radius: 5px; border: 1.5px solid #fff;">
+                        <div style="display: flex; flex-direction: column; align-items: flex-start; line-height: 1;">
+                            <span style="font-size: 0.5rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.9;">GlobiPuntos</span>
+                            <span class="globipuntos-value-sync">${this.state.globipuntos}</span>
+                        </div>
+                    </div>
+                `;
+            }
+
+            celebrate(isSuccess, x, y) {
+                if (isSuccess) {
+                    const sound = document.getElementById('successSound');
+                    if (sound) { sound.currentTime = 0; sound.play().catch(() => { }); }
+                    if (window.triggerBurst) window.triggerBurst(x, y);
+                    this.state.globipuntos += 10;
+                    this.updateUI();
+                    this.save();
+                    const goodMsgs = ["¡CORRECTO! 🎈", "¡BRAVO! Globi está feliz 👏", "¡Lo lograste! Ganaste GlobiPuntos 🎈", "¡Eres una estrella! 🎈"];
+                    this.speak(goodMsgs[Math.floor(Math.random() * goodMsgs.length)]);
+                } else {
+                    const sound = document.getElementById('failureSound');
+                    if (sound) { sound.currentTime = 0; sound.play().catch(() => { }); }
+                    const tryMsgs = ["¡Oh no! Intenta de nuevo 💪", "¡Casi! Globi te anima 🌈", "¡Ups! Sigue intentando ❤️", "¡No pasa nada! A la próxima sale! 🎈"];
+                    this.speak(tryMsgs[Math.floor(Math.random() * tryMsgs.length)]);
+                }
+            }
+
+            setupMascot() {
+                const mascot = document.getElementById('flobiMascot');
+                if (mascot) {
+                    mascot.onclick = () => {
+                        const msgs = [
+                            "¡El universo de Globinobys es gigante! 🚀",
+                            "¿Sabías que aprender matemáticas te da superpoderes? 🔢",
+                            "¡Me encanta verte explorar! 🌈",
+                            "¡Sigue sumando puntos para ser una Leyenda! ⭐"
+                        ];
+                        this.speak(msgs[Math.floor(Math.random() * msgs.length)]);
+                    };
+                }
+            }
+
+            welcomeMessage() {
+                setTimeout(() => this.speak("¡Hola! Soy Globi. ¡Vamos a explorar juntos! 🌈"), 1000);
+            }
+
+            openIsland(subject) {
+                this.gameView.style.display = 'flex';
+                this.gameContent.innerHTML = '';
+
+                switch (subject) {
+                    case 'math':
+                        this.gameTitle.textContent = "Isla Matemática 🔢";
+                        this.loadMathIsland();
+                        break;
+                    case 'reading':
+                        this.gameTitle.textContent = "Isla Lectura 📚";
+                        this.loadReadingIsland();
+                        break;
+                    case 'science':
+                        this.gameTitle.textContent = "Isla Ciencia 🧪";
+                        this.loadScienceIsland();
+                        break;
+                    case 'logic':
+                        this.gameTitle.textContent = "Isla Lógica 🧩";
+                        this.loadLogicIsland();
+                        break;
+                    case 'creative':
+                        this.gameTitle.textContent = "Isla Creatividad 🎨";
+                        this.loadCreativeIsland();
+                        break;
+                    default:
+                        this.gameTitle.textContent = "Explorando...";
+                        this.gameContent.innerHTML = `<h3>¡Próximamente más aventuras!</h3>`;
+                }
+            }
+
+            closeIsland() {
+                this.gameView.style.display = 'none';
+                if (this.mathTicker) clearInterval(this.mathTicker);
+            }
+
+            loadMathIsland() {
+                this.gameContent.innerHTML = `
+                    <div style="text-align:center; padding: 20px; width: 100%;">
+                        <h3>¡Desafío Burbujas Matemáticas! 🫧</h3>
+                        <p>Explota los resultados de: <strong id="mathProblem" style="font-size: 2rem; color: #4D96FF;">?</strong></p>
+                        <div id="mathBoard" style="position:relative; width:100%; height:350px; background: rgba(255,255,255,0.5); border-radius: 20px; overflow:hidden; border: 4px solid #fff;"></div>
+                        <div style="display: flex; justify-content: center;">${this.getPointsHTML()}</div>
+                    </div>
+                `;
+                this.startMathGame();
+            }
+
+            startMathGame() {
+                let score = 0;
+                let problem = { a: 1, b: 1, ans: 1 };
+                const board = document.getElementById('mathBoard');
+                const scoreEl = document.getElementById('mathScore');
+                const probEl = document.getElementById('mathProblem');
+
+                const newProblem = () => {
+                    const difficulty = Math.min(this.state.level, 10);
+                    problem.a = Math.floor(Math.random() * (9 + difficulty)) + 1;
+                    problem.b = Math.floor(Math.random() * (9 + difficulty)) + 1;
+                    problem.ans = problem.a * problem.b;
+                    if (probEl) probEl.textContent = `${problem.a} x ${problem.b}`;
+                };
+
+                const spawnBubble = () => {
+                    const bubble = document.createElement('div');
+                    const val = Math.random() > 0.3 ? problem.ans : Math.floor(Math.random() * 81);
+                    bubble.textContent = val;
+                    bubble.className = 'math-bubble';
+                    bubble.style.cssText = `
+                        position: absolute; bottom: -50px; left: ${Math.random() * 80 + 10}%;
+                        width: 70px; height: 70px; background: rgba(109,213,250,0.7);
+                        border-radius: 50%; display: grid; place-items: center; font-weight: 800;
+                        color: #fff; cursor: pointer; font-size: 1.5rem; border: 2px solid #fff;
+                        transition: transform 0.2s;
+                    `;
+
+                    if (board) board.appendChild(bubble);
+
+                    let pos = -50;
+                    const spd = 1 + Math.random() * 2;
+                    const ticker = setInterval(() => {
+                        pos += spd;
+                        bubble.style.bottom = pos + 'px';
+                        if (pos > 450) {
+                            clearInterval(ticker);
+                            bubble.remove();
+                        }
+                    }, 20);
+
+                    bubble.onclick = (e) => {
+                        if (parseInt(bubble.textContent) === problem.ans) {
+                            score += 10;
+                            this.addXP(5);
+                            bubble.style.background = '#00FFAB';
+                            this.celebrate(true, e.clientX, e.clientY);
+                            newProblem();
+                        } else {
+                            bubble.style.background = '#FF6B6B';
+                            this.celebrate(false, e.clientX, e.clientY);
+                        }
+                        setTimeout(() => {
+                            clearInterval(ticker);
+                            bubble.remove();
+                        }, 200);
+                    };
+                };
+
+                newProblem();
+                const spawnInterval = Math.max(500, 1500 - (this.state.level * 50));
+                this.mathTicker = setInterval(spawnBubble, spawnInterval);
+            }
+
+            loadReadingIsland() {
+                const wordsEasy = ["HOLA", "SOL", "LUNA", "CASA", "AZUL"];
+                const wordsHard = ["GLOBINOBYS", "AVENTURA", "UNIVERSO", "CIENCIA", "EXPLORADOR"];
+                const words = this.state.level > 5 ? [...wordsEasy, ...wordsHard] : wordsEasy;
+                let target = words[0];
+
+                this.gameContent.innerHTML = `
+                    <div style="text-align:center;">
+                        <h3>¡Cazador de Palabras! ✍️</h3>
+                        <p>Haz clic en la palabra: <strong id="wordTarget" style="font-size: 2rem; color: #4D96FF;">?</strong></p>
+                        <div id="wordBoard" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; width: 300px; margin: 20px auto;"></div>
+                        <div style="display: flex; justify-content: center;">${this.getPointsHTML()}</div>
+                    </div>
+                `;
+
+                const updateGame = () => {
+                    target = words[Math.floor(Math.random() * words.length)];
+                    document.getElementById('wordTarget').textContent = target;
+                    const board = document.getElementById('wordBoard');
+                    board.innerHTML = '';
+
+                    const options = [target];
+                    while (options.length < 4) {
+                        const random = words[Math.floor(Math.random() * words.length)];
+                        if (!options.includes(random)) options.push(random);
+                    }
+                    options.sort(() => Math.random() - 0.5);
+
+                    options.forEach(w => {
+                        const btn = document.createElement('button');
+                        btn.textContent = w;
+                        btn.className = 'kids-btn-glow';
+                        btn.style.padding = '15px';
+                        btn.onclick = (e) => {
+                            if (w === target) {
+                                this.addXP(10);
+                                this.celebrate(true, e.clientX, e.clientY);
+                                updateGame();
+                            } else {
+                                btn.style.background = '#FF6B6B';
+                                this.celebrate(false, e.clientX, e.clientY);
+                                setTimeout(() => btn.style.background = '', 500);
+                            }
+                        };
+                        board.appendChild(btn);
+                    });
+                };
+                updateGame();
+            }
+
+            loadScienceIsland() {
+                const planets = [
+                    { name: 'Mercurio', info: 'Es el planeta más pequeño y cercano al sol.', emoji: '🌑' },
+                    { name: 'Venus', info: 'Es el planeta más caliente de todos.', emoji: '🌞' },
+                    { name: 'Tierra', info: 'El único planeta con mucha vida y agua.', emoji: '🌍' },
+                    { name: 'Marte', info: 'Se le conoce como el planeta rojo.', emoji: '🔴' },
+                    { name: 'Júpiter', info: 'Es el planeta más grande del sistema solar.', emoji: '🪐' },
+                    { name: 'Saturno', info: 'Tiene los anillos más brillantes y hermosos.', emoji: '🪐' }
+                ];
+
+                this.gameContent.innerHTML = `
+                    <div style="text-align:center; max-width: 600px;">
+                        <h3>Explorador Espacial 🧪</h3>
+                        <p id="scienceMission" style="font-size: 1.3rem; color: #4D96FF; font-weight: 800; margin: 20px 0; background: rgba(255,255,255,0.4); padding: 15px; border-radius: 15px; border: 2px dashed #4D96FF;">Cargando misión...</p>
+                        <div id="planetGrid" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap:15px; margin-top:20px;"></div>
+                        <div style="display: flex; justify-content: center; margin-top: 30px;">${this.getPointsHTML()}</div>
+                    </div>
+                `;
+
+                const grid = document.getElementById('planetGrid');
+                const mission = document.getElementById('scienceMission');
+                let currentTarget = null;
+
+                const nextMission = () => {
+                    currentTarget = planets[Math.floor(Math.random() * planets.length)];
+                    mission.textContent = `Misión: ¡Encuentra el planeta que... ${currentTarget.info.toLowerCase()}!`;
+                    this.speak(`¡Busca el planeta que ${currentTarget.info.toLowerCase()}`);
+                    renderPlanets();
+                };
+
+                const renderPlanets = () => {
+                    grid.innerHTML = '';
+                    const shuffled = [...planets].sort(() => Math.random() - 0.5);
+                    shuffled.forEach(p => {
+                        const card = document.createElement('div');
+                        card.className = 'planet-card';
+                        card.style.cssText = `cursor:pointer; padding:20px; background: white; border-radius:20px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); transition: 0.3s; text-align: center; border: 4px solid transparent;`;
+                        card.innerHTML = `<div style="font-size: 3rem; margin-bottom: 10px;">${p.emoji}</div><div style="font-weight: 800; color: #4a3a6a;">${p.name}</div>`;
+
+                        card.onmouseover = () => card.style.transform = 'translateY(-5px)';
+                        card.onmouseout = () => card.style.transform = 'translateY(0)';
+
+                        card.onclick = (e) => {
+                            if (p.name === currentTarget.name) {
+                                card.style.borderColor = '#00FFAB';
+                                card.style.background = '#e6fff5';
+                                this.addXP(15);
+                                this.celebrate(true, e.clientX, e.clientY);
+                                setTimeout(nextMission, 2000);
+                            } else {
+                                card.style.borderColor = '#FF6B6B';
+                                card.style.background = '#fff0f0';
+                                this.celebrate(false, e.clientX, e.clientY);
+                                setTimeout(() => {
+                                    card.style.borderColor = 'transparent';
+                                    card.style.background = 'white';
+                                }, 1000);
+                            }
+                        };
+                        grid.appendChild(card);
+                    });
+                };
+
+                nextMission();
+            }
+
+            loadLogicIsland() {
+                const emojis = ['🐶', '🐱', '🐭', '🐹', '🐰', '🦊', '🐶', '🐱', '🐭', '🐹', '🐰', '🦊'];
+                emojis.sort(() => Math.random() - 0.5);
+                let selected = [];
+
+                this.gameContent.innerHTML = `
+                    <div style="text-align:center;">
+                        <h3>Desafío Mental 🧩</h3>
+                        <div id="logicBoard" style="display:grid; grid-template-columns: repeat(4, 1fr); gap:10px; width:300px; margin:20px auto;"></div>
+                        <div style="display: flex; justify-content: center;">${this.getPointsHTML()}</div>
+                    </div>
+                `;
+
+                const board = document.getElementById('logicBoard');
+                emojis.forEach((em, i) => {
+                    const card = document.createElement('div');
+                    card.style.cssText = 'height:60px; background:rgba(255,255,255,0.5); border-radius:10px; display:grid; place-items:center; font-size:2rem; cursor:pointer; color:transparent;';
+                    card.textContent = em;
+                    card.onclick = (e) => {
+                        if (card.style.color !== 'transparent' || selected.length >= 2) return;
+                        card.style.color = '#fff';
+                        selected.push({ em, card });
+
+                        if (selected.length === 2) {
+                            if (selected[0].em === selected[1].em) {
+                                this.addXP(20);
+                                this.celebrate(true, e.clientX, e.clientY);
+                                selected = [];
+                            } else {
+                                this.celebrate(false, e.clientX, e.clientY);
+                                setTimeout(() => {
+                                    selected[0].card.style.color = 'transparent';
+                                    selected[1].card.style.color = 'transparent';
+                                    selected = [];
+                                }, 1000);
+                            }
+                        }
+                    };
+                    board.appendChild(card);
+                });
+            }
+
+            loadCreativeIsland() {
+                this.gameContent.innerHTML = `
+                    <div style="text-align:center;">
+                        <h3>Estudio de Arte 🎨</h3>
+                        <p>¡Dibuja con el mouse o tu dedo!</p>
+                        <canvas id="magicCanvas" width="400" height="300" style="background:#fff; border-radius:15px; cursor:crosshair; margin-top:20px;"></canvas>
+                        <br><button class="kids-btn-glow" style="margin-top:10px;" onclick="document.getElementById('magicCanvas').getContext('2d').clearRect(0,0,400,300)">Borrar Todo</button>
+                        <div style="display: flex; justify-content: center;">${this.getPointsHTML()}</div>
+                    </div>
+                `;
+
+                const canvas = document.getElementById('magicCanvas');
+                const ctx = canvas.getContext('2d');
+                let painting = false;
+
+                const start = (e) => { painting = true; draw(e); };
+                const end = () => { painting = false; ctx.beginPath(); this.addXP(1); };
+                const draw = (e) => {
+                    if (!painting) return;
+                    ctx.lineWidth = 10;
+                    ctx.lineCap = 'round';
+                    ctx.strokeStyle = '#4D96FF';
+                    const rect = canvas.getBoundingClientRect();
+                    const x = (e.clientX || (e.touches && e.touches[0].clientX)) - rect.left;
+                    const y = (e.clientY || (e.touches && e.touches[0].clientY)) - rect.top;
+                    ctx.lineTo(x, y);
+                    ctx.stroke();
+                    ctx.beginPath();
+                    ctx.moveTo(x, y);
+                };
+
+                canvas.addEventListener('mousedown', start);
+                canvas.addEventListener('mouseup', end);
+                canvas.addEventListener('mousemove', draw);
+                canvas.addEventListener('touchstart', (e) => { e.preventDefault(); if (e.touches[0]) start(e.touches[0]); });
+                canvas.addEventListener('touchend', end);
+                canvas.addEventListener('touchmove', (e) => { e.preventDefault(); if (e.touches[0]) draw(e.touches[0]); });
+            }
+        }
+
+        // ===== MUSIC PLAYER (Updated for new grid) =====
+        const DEFAULT_COVER = 'https://i.ibb.co/sdNCjFn8/Chat-GPT-Image-7-feb-2026-11-56-45-p-m.png';
+
+        const kidsSongs = [
+            { id: '1', title: 'Amistad', artist: 'Globinobys', cover_url: DEFAULT_COVER, audio_url: 'https://ancbkpzobgctpagyczld.supabase.co/storage/v1/object/public/Music/Amistad.mp3' },
+            { id: '2', title: 'El Verano', artist: 'Globinobys', cover_url: DEFAULT_COVER, audio_url: 'https://ancbkpzobgctpagyczld.supabase.co/storage/v1/object/public/Music/El%20Verano.mp3' },
+            { id: '3', title: 'Juego de Palabras', artist: 'Globinobys', cover_url: DEFAULT_COVER, audio_url: 'https://ancbkpzobgctpagyczld.supabase.co/storage/v1/object/public/Music/juego%20de%20palabras%20.mp3' },
+            { id: '4', title: 'Vitaminas', artist: 'Globinobys', cover_url: DEFAULT_COVER, audio_url: 'https://ancbkpzobgctpagyczld.supabase.co/storage/v1/object/public/Music/Vitaminas%20lista.mp3' }
+        ];
+
+        class GlobinobysPlayer {
+            constructor() {
+                this.songs = kidsSongs;
+                this.currentIndex = 0;
+                this.isPlaying = false;
+                this.seeking = false;
+
+                this.audio = document.getElementById('rmgAudio');
+                this.btnPlay = document.getElementById('rmgPlay');
+                this.btnPrev = document.getElementById('rmgPrev');
+                this.btnNext = document.getElementById('rmgNext');
+                this.seek = document.getElementById('rmgSeek');
+                this.vol = document.getElementById('rmgVol');
+                this.titleEl = document.getElementById('rmgTitle');
+                this.artistEl = document.getElementById('rmgArtist');
+                this.timeEl = document.getElementById('rmgTime');
+                this.durEl = document.getElementById('rmgDur');
+                this.coverEl = document.getElementById('rmgCover');
+                this.songsGrid = document.getElementById('songsGrid');
+
+                this.init();
+            }
+
+            init() {
+                this.setupEventListeners();
+                this.renderSongs();
+                this.loadTrack(0, false);
+            }
+
+            setupEventListeners() {
+                if (this.btnPlay) this.btnPlay.onclick = () => this.togglePlay();
+                if (this.btnPrev) this.btnPrev.onclick = () => this.prevSong();
+                if (this.btnNext) this.btnNext.onclick = () => this.nextSong();
+                if (this.vol) this.vol.oninput = () => { this.audio.volume = this.vol.value / 100; };
+                if (this.audio) {
+                    this.audio.onloadedmetadata = () => { this.durEl.textContent = this.formatTime(this.audio.duration); };
+                    this.audio.ontimeupdate = () => {
+                        if (this.seeking) return;
+                        const p = this.audio.duration ? (this.audio.currentTime / this.audio.duration) * 100 : 0;
+                        if (this.seek) this.seek.value = p;
+                        if (this.timeEl) this.timeEl.textContent = this.formatTime(this.audio.currentTime);
+                    };
+                    this.audio.onended = () => this.nextSong();
+                }
+                if (this.seek) {
+                    this.seek.oninput = () => { this.seeking = true; };
+                    this.seek.onchange = () => {
+                        const p = this.seek.value / 100;
+                        if (this.audio.duration) this.audio.currentTime = p * this.audio.duration;
+                        this.seeking = false;
+                    };
+                }
+            }
+
+            renderSongs() {
+                if (!this.songsGrid) this.songsGrid = document.getElementById('songsGrid');
+                if (!this.songsGrid) return;
+                this.songsGrid.innerHTML = '';
+                this.songs.forEach((song, index) => {
+                    const card = document.createElement('div');
+                    card.className = `song-card ${this.currentIndex === index && this.isPlaying ? 'active' : ''}`;
+                    card.style.animationDelay = `${index * 0.1}s`;
+                    card.innerHTML = `
+                        <div class="song-cover-wrapper">
+                            <img src="${song.cover_url || DEFAULT_COVER}" class="song-cover" alt="${song.title}">
+                        </div>
+                        <div class="song-info">
+                            <h3>${song.title}</h3>
+                            <p>${song.artist || 'Globinobys'}</p>
+                        </div>
+                    `;
+                    card.onclick = (e) => { e.stopPropagation(); this.playSong(index); };
+                    this.songsGrid.appendChild(card);
+                });
+            }
+
+            loadTrack(index, autoPlay = true) {
+                this.currentIndex = index;
+                const song = this.songs[index];
+                if (!song) return;
+                if (this.audio) this.audio.src = song.audio_url;
+                if (this.titleEl) this.titleEl.textContent = song.title;
+                if (this.artistEl) this.artistEl.textContent = song.artist || 'Globinobys';
+                if (this.coverEl) this.coverEl.src = song.cover_url || DEFAULT_COVER;
+                if (autoPlay) this.play();
+            }
+
+            async play() {
+                try {
+                    await this.audio.play();
+                    this.isPlaying = true;
+                    this.updateUI();
+                } catch (e) { console.error("Playback failed", e); }
+            }
+
+            pause() {
+                this.audio.pause();
+                this.isPlaying = false;
+                this.updateUI();
+            }
+
+            togglePlay() {
+                if (this.audio.paused) this.play();
+                else this.pause();
+            }
+
+            playSong(index) { this.loadTrack(index, true); }
+            prevSong() { let idx = this.currentIndex - 1; if (idx < 0) idx = this.songs.length - 1; this.loadTrack(idx, true); }
+            nextSong() { let idx = this.currentIndex + 1; if (idx >= this.songs.length) idx = 0; this.loadTrack(idx, true); }
+
+            updateUI() {
+                if (this.btnPlay) this.btnPlay.textContent = this.isPlaying ? "⏸" : "▶";
+                this.renderSongs();
+            }
+
+            formatTime(sec) {
+                if (!isFinite(sec)) return "0:00";
+                sec = Math.max(0, Math.floor(sec));
+                const m = Math.floor(sec / 60);
+                const s = String(sec % 60).padStart(2, "0");
+                return `${m}:${s}`;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            window.globinobysWorld = new GlobinobysWorld();
+            window.globinobysPlayer = new GlobinobysPlayer();
+
+            // Exit listener
+            const exitBtn = document.getElementById('exitKids');
+            if (exitBtn) {
+                exitBtn.onclick = () => window.location.href = 'index.html';
+            }
+        });
+    </script>
+</body>
+
+</html>

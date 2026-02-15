@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <link rel='icon' type='image/png'
+        href='https://i.ibb.co/Y4phrnwx/Chat-GPT-Image-8-feb-2026-22-26-29-removebg-preview.png'>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Programados | Play Me Gusta</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/programas.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/a11y.css">
+    <script defer src="../assets/a11y.js"></script>
+</head>
+
+<body data-program-id="programados">
+    <a class="skip-link" href="#main">Saltar al contenido</a>
+    <div class="bg-mesh"></div>
+    <div class="bg-glow-ball"></div>
+    <nav class="navbar scrolled">
+        <div class="logo" onclick="window.location.href='../play.html'">Play Me Gusta</div>
+        <div class="nav-links">
+            <a href="../play.html">Home</a>
+            <a href="index.html" class="active">Programas</a>
+            <a href="../tv-en-vivo.html">TV en Vivo</a>
+            
+            <a href="../play.html#visualizer">Radio en Vivo</a>
+            <a href="index.html?cat=Podcast">Podcast</a>
+        </div>
+        <div class="nav-actions">
+            <div
+                style="width: 35px; height: 35px; background: var(--grad-pink); border-radius: 50%; cursor: pointer; box-shadow: var(--glow-pink);">
+            </div>
+        </div>
+    </nav>
+    <header class="det-hero" id="det-hero">
+        <div class="det-hero-overlay"></div>
+        <div class="det-content">
+            <div class="category-tag"
+                style="color: #cfff00; font-size: 1.2rem; font-weight: bold; margin-bottom: 10px;">Entretención</div>
+            <h1 class="det-title" id="det-title">Programados</h1>
+            <p class="det-desc" id="det-desc">Cargando...</p>
+            <div class="hero-actions">
+                <button class="btn btn-primary">Reproducir</button>
+                <button class="btn btn-secondary">Fotos</button>
+            </div>
+        </div>
+    </header>
+    <main id="main">
+        <section class="detail-section">
+            <h2 class="section-title">Galería de Fotos</h2>
+            <div class="gallery-grid" id="gallery-grid"></div>
+        </section>
+        <section class="detail-section" style="background: rgba(255,255,255,0.02);">
+            <h2 class="section-title">Videos</h2>
+            <div class="videos-grid" id="videos-grid"></div>
+        </section>
+    </main>
+    <footer
+        style="padding: 50px var(--container-padding); border-top: 1px solid #333; margin-top: 50px; text-align: center; color: var(--text-muted);">
+        <div class="logo">Play Me Gusta</div>
+    </footer>
+    <script src="../js/programas-data.js"></script>
+    <script src="../js/program-details.js"></script>
+    <script src="../js/main.js"></script>
+</body>
+
+</html>

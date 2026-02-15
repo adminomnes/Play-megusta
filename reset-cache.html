@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Reset Play Platform</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            background: #111;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+        }
+
+        button {
+            background: #e50914;
+            color: white;
+            border: none;
+            padding: 20px 40px;
+            font-size: 1.5rem;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background: #ff0f1f;
+        }
+
+        .success {
+            color: #1db954;
+            font-size: 1.2rem;
+            margin-top: 20px;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Restaurar Sistema</h1>
+    <p>Si no ves los cambios (Widget de reloj, Perfiles, etc.), pulsa este botón.</p>
+    <button onclick="resetSystem()">LIMPIAR Y REINICIAR</button>
+    <div id="msg" class="success">¡Listo! Redirigiendo...</div>
+
+    <script>
+        async function resetSystem() {
+            // 1. Clear Storage
+            localStorage.clear();
+            sessionStorage.clear();
+
+            // 2. Clear Service Workers (Aggregation of aggressive caching)
+            if ('serviceWorker' in navigator) {
+                const registrations = await navigator.serviceWorker.getRegistrations();
+                for (let registration of registrations) {
+                    await registration.unregister();
+                }
+            }
+
+            // 3. Force Reload
+            const msg = document.getElementById('msg');
+            msg.style.display = 'block';
+            setTimeout(() => {
+                window.location.href = 'index.html?v=' + new Date().getTime();
+            }, 1000);
+        }
+    </script>
+</body>
+
+</html>

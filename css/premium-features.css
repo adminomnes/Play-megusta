@@ -1,0 +1,365 @@
+/**
+ * Premium Features CSS
+ * Styles for Newsletter, Push Notifications, and World Map
+ */
+
+/* ============================================
+   NEWSLETTER SECTION
+   ============================================ */
+
+.newsletter-section {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 60px 30px;
+    margin: 60px 0;
+    border-radius: 12px;
+    color: white;
+}
+
+.newsletter-container {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.newsletter-title {
+    font-family: var(--font-serif);
+    font-size: 2.5rem;
+    font-weight: 900;
+    margin-bottom: 16px;
+}
+
+.newsletter-subtitle {
+    font-size: 1.1rem;
+    margin-bottom: 40px;
+    opacity: 0.95;
+}
+
+.newsletter-form {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 40px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.form-group {
+    margin-bottom: 24px;
+    text-align: left;
+}
+
+.form-label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+}
+
+.form-input {
+    width: 100%;
+    padding: 14px 16px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.9);
+    color: #333;
+    font-size: 1rem;
+    transition: all 0.3s;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: white;
+    background: white;
+}
+
+.form-radio-group,
+.form-checkbox-group {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.form-radio-label,
+.form-checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-size: 0.95rem;
+}
+
+.form-radio-label input,
+.form-checkbox-label input {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+.form-consent {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.form-consent input {
+    margin-top: 4px;
+}
+
+.form-submit {
+    width: 100%;
+    padding: 16px;
+    background: white;
+    color: #667eea;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 20px;
+}
+
+.form-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.form-submit:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.newsletter-message {
+    margin-top: 20px;
+    padding: 14px;
+    border-radius: 8px;
+    font-weight: 600;
+    display: none;
+}
+
+.newsletter-message.success {
+    background: rgba(76, 175, 80, 0.2);
+    border: 2px solid #4caf50;
+}
+
+.newsletter-message.error {
+    background: rgba(244, 67, 54, 0.2);
+    border: 2px solid #f44336;
+}
+
+.honeypot {
+    position: absolute;
+    left: -9999px;
+    opacity: 0;
+}
+
+/* ============================================
+   PUSH NOTIFICATIONS SECTION
+   ============================================ */
+
+.push-section {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    padding: 40px 30px;
+    margin: 40px 0;
+    border-radius: 12px;
+    color: white;
+}
+
+.push-container {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.push-title {
+    font-family: var(--font-serif);
+    font-size: 2rem;
+    font-weight: 900;
+    margin-bottom: 12px;
+}
+
+.push-description {
+    font-size: 1rem;
+    margin-bottom: 30px;
+    opacity: 0.95;
+}
+
+.push-controls {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 30px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.push-status {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.push-topics {
+    margin: 20px 0;
+}
+
+.push-btn {
+    padding: 14px 32px;
+    background: white;
+    color: #f5576c;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin: 5px;
+}
+
+.push-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* ============================================
+   WORLD MAP SECTION
+   ============================================ */
+
+.map-section {
+    margin: 60px 0;
+    padding: 40px 0;
+    background: var(--news-gray-100);
+}
+
+.map-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.map-title {
+    font-family: var(--font-serif);
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: var(--news-black);
+    margin-bottom: 12px;
+}
+
+.map-subtitle {
+    font-size: 1.1rem;
+    color: var(--news-gray-700);
+}
+
+.map-controls {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.map-topic-btn {
+    padding: 10px 24px;
+    background: white;
+    color: var(--news-black);
+    border: 2px solid var(--news-gray-300);
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.map-topic-btn:hover {
+    border-color: var(--news-red);
+    color: var(--news-red);
+}
+
+.map-topic-btn.active {
+    background: var(--news-red);
+    color: white;
+    border-color: var(--news-red);
+}
+
+.map-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+#world-map {
+    height: 600px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.map-tooltip {
+    padding: 12px;
+}
+
+.map-tooltip h4 {
+    margin: 0 0 12px 0;
+    font-size: 1.1rem;
+    color: var(--news-black);
+    border-bottom: 2px solid var(--news-red);
+    padding-bottom: 8px;
+}
+
+.map-tooltip ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.map-tooltip li {
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+}
+
+.map-tooltip a {
+    color: var(--news-black);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.map-tooltip a:hover {
+    color: var(--news-red);
+}
+
+.custom-popup .leaflet-popup-content-wrapper {
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.custom-popup .leaflet-popup-tip {
+    background: white;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 768px) {
+
+    .newsletter-section,
+    .push-section {
+        padding: 40px 20px;
+    }
+
+    .newsletter-title,
+    .map-title {
+        font-size: 2rem;
+    }
+
+    .newsletter-form {
+        padding: 30px 20px;
+    }
+
+    .form-radio-group,
+    .form-checkbox-group {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    #world-map {
+        height: 400px;
+    }
+}

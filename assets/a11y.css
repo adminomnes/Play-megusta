@@ -1,0 +1,310 @@
+/* 
+  A11Y Layer - Radio Me Gusta 
+  International Accessibility Standard WCAG 2.1 AA 
+*/
+
+:root {
+    --font-scale: 1;
+    --focus-outline-color: #4D96FF;
+    --focus-outline-width: 3px;
+}
+
+/* Skip Link */
+.skip-link {
+    position: absolute;
+    top: -100px;
+    left: 0;
+    background: var(--focus-outline-color);
+    color: white;
+    padding: 10px 20px;
+    z-index: 99999;
+    text-decoration: none;
+    font-weight: bold;
+    transition: top 0.3s;
+    border-radius: 0 0 8px 0;
+}
+
+.skip-link:focus {
+    top: 0;
+}
+
+/* Global Focus Style */
+*:focus-visible {
+    outline: var(--focus-outline-width) solid var(--focus-outline-color) !important;
+    outline-offset: 4px !important;
+}
+
+/* Base Scaling */
+html {
+    font-size: calc(16px * var(--font-scale));
+    scroll-behavior: smooth;
+}
+
+/* Accessibility Widget */
+.a11y-widget-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #4D96FF;
+    color: white;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s;
+}
+
+.a11y-widget-btn:hover {
+    transform: scale(1.1);
+}
+
+.a11y-panel {
+    position: fixed;
+    bottom: 90px;
+    right: 20px;
+    width: 300px;
+    background: #1a1a2e;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+    z-index: 10000;
+    display: none;
+    flex-direction: column;
+    gap: 15px;
+    backdrop-filter: blur(10px);
+    color: white;
+}
+
+.a11y-panel.active {
+    display: flex;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.a11y-panel h2 {
+    font-size: 1.2rem;
+    margin: 0 0 10px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.a11y-control {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.a11y-control label {
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.a11y-btn-group {
+    display: flex;
+    gap: 5px;
+}
+
+.a11y-option-btn {
+    flex: 1;
+    padding: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: all 0.2s;
+}
+
+.a11y-option-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.a11y-option-btn.active {
+    background: #4D96FF;
+    border-color: #4D96FF;
+}
+
+.a11y-toggle-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 10px 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.a11y-toggle-btn.active {
+    border-color: #4D96FF;
+    background: rgba(77, 150, 255, 0.1);
+}
+
+.a11y-toggle-btn .switch {
+    width: 40px;
+    height: 20px;
+    background: #333;
+    border-radius: 20px;
+    position: relative;
+    transition: background 0.3s;
+}
+
+.a11y-toggle-btn.active .switch {
+    background: #4D96FF;
+}
+
+.a11y-toggle-btn .switch::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 16px;
+    height: 16px;
+    background: white;
+    border-radius: 50%;
+    transition: transform 0.3s;
+}
+
+.a11y-toggle-btn.active .switch::after {
+    transform: translateX(20px);
+}
+
+.a11y-reset-btn {
+    margin-top: 10px;
+    padding: 12px;
+    background: #ff0055;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* High Contrast Mode */
+.a11y-contrast {
+    --bg-base: #000 !important;
+    --bg-surface: #000 !important;
+    --text-primary: #fff !important;
+    --text-secondary: #ff0 !important;
+    --accent: #ff0 !important;
+    --border-subtle: #fff !important;
+}
+
+.a11y-contrast * {
+    background-color: #000 !important;
+    color: #fff !important;
+    border-color: #fff !important;
+    text-shadow: none !important;
+    box-shadow: none !important;
+}
+
+.a11y-contrast a,
+.a11y-contrast button {
+    color: #ff0 !important;
+    border: 2px solid #ff0 !important;
+}
+
+.a11y-contrast .a11y-widget-btn {
+    background: #ff0 !important;
+    color: #000 !important;
+    border: 4px solid #fff !important;
+}
+
+/* Reduce Motion */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+.a11y-reduce-motion * {
+    animation: none !important;
+    transition: none !important;
+}
+
+/* Font Scales */
+.a11y-font-1 {
+    --font-scale: 1;
+}
+
+.a11y-font-2 {
+    --font-scale: 1.25;
+}
+
+.a11y-font-3 {
+    --font-scale: 1.5;
+}
+
+/* Transcription Accordion */
+.transcription-container {
+    margin-top: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.transcription-trigger {
+    width: 100%;
+    padding: 15px 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border: none;
+    color: white;
+    text-align: left;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 600;
+}
+
+.transcription-content {
+    display: none;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.3);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.transcription-content.active {
+    display: block;
+}
+
+.aria-announcer {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}

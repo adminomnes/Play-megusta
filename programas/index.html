@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <link rel='icon' type='image/png'
+        href='https://i.ibb.co/Y4phrnwx/Chat-GPT-Image-8-feb-2026-22-26-29-removebg-preview.png'>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Programas | Play Me Gusta</title>
+    <!-- Use relative paths based on folder structure -->
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/programas.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/a11y.css">
+    <script defer src="../assets/a11y.js"></script>
+</head>
+
+<body class="hub-page">
+    <a class="skip-link" href="#main">Saltar al contenido</a>
+    <div class="bg-mesh"></div>
+    <div class="bg-glow-ball"></div>
+
+    <!-- Navbar -->
+    <nav class="navbar scrolled">
+        <div class="logo" onclick="window.location.href='../play.html'">Play Me Gusta</div>
+        <div class="nav-links">
+            <a href="../play.html">Home</a>
+            <a href="index.html" class="active">Programas</a>
+            <a href="../tv-en-vivo.html">TV en Vivo</a>
+            <a>Noticias</a>
+            <a href="../play.html#visualizer">Radio en Vivo</a>
+            <a href="index.html?cat=Podcast">Podcast</a>
+            <a href="../contacto/index.html">Contacto</a>
+        </div>
+        <div class="nav-actions">
+            <div
+                style="width: 35px; height: 35px; background: var(--grad-pink); border-radius: 50%; cursor: pointer; box-shadow: var(--glow-pink);">
+            </div>
+        </div>
+    </nav>
+
+    <!-- Filter Hub Header -->
+    <header class="filter-container" id="filter-chips">
+        <!-- Chips inyectados por programas-ui.js -->
+    </header>
+
+    <main id="main">
+        <div class="program-grid" id="main-program-grid">
+            <!-- Cards inyectadas por programas-ui.js -->
+        </div>
+    </main>
+
+    <footer
+        style="padding: 50px var(--container-padding); border-top: 1px solid #333; margin-top: 50px; text-align: center; color: var(--text-muted);">
+        <div class="logo" style="margin-bottom: 20px; font-size: 1.4rem;">Play Me Gusta</div>
+        <p>&copy; 2026 Play Me Gusta. Todos los derechos reservados.</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="../js/programas-data.js"></script>
+    <script src="../js/programas-ui.js"></script>
+    <script src="../js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Inicializar Grid y Filtros
+            setupFilters('filter-chips', 'main-program-grid');
+
+            // Check for URL parameters (?cat=Infantil)
+            const urlParams = new URLSearchParams(window.location.search);
+            const cat = urlParams.get('cat');
+
+            if (cat) {
+                initProgramGrid('main-program-grid', cat);
+                // Actualizar chip activo visualmente si es necesario
+                setTimeout(() => {
+                    const chips = document.querySelectorAll('.chip');
+                    chips.forEach(c => {
+                        if (c.innerText === cat) {
+                            c.classList.add('active');
+                        } else {
+                            c.classList.remove('active');
+                        }
+                    });
+                }, 100);
+            } else {
+                initProgramGrid('main-program-grid');
+            }
+        });
+
+        // Re-definir navegación interna para el Hub
+        function navigate(id) {
+            window.location.href = `${id}.html`; // En el hub, los archivos están en la misma carpeta
+        }
+    </script>
+</body>
+
+</html>

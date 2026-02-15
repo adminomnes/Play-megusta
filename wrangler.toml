@@ -1,6 +1,10 @@
 name = "play-megusta1"
 compatibility_date = "2024-01-01"
-pages_build_output_dir = ".vercel/output/static"
+pages_build_output_dir = "dist"
 
-[build]
-command = "npm run build"
+[triggers]
+crons = [
+  "0 12 * * *",      # Daily newsletter (09:00 Chile / 12:00 UTC)
+  "0 12 * * 1",      # Weekly newsletter (Monday)
+  "*/30 * * * *"     # Push notifications (every 30 min)
+]
