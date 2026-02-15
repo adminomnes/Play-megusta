@@ -334,6 +334,17 @@
 }
 
 /* ============================================
+   GRID LAYOUT FOR BOTTOM SECTION
+   ============================================ */
+
+.premium-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-top: 40px;
+}
+
+/* ============================================
    RESPONSIVE
    ============================================ */
 
@@ -361,5 +372,10 @@
 
     #world-map {
         height: 400px;
+    }
+
+    /* Stack grid on mobile */
+    .premium-grid {
+        grid-template-columns: 1fr;
     }
 }
